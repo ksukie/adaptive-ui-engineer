@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Adaptive UI Engineer</title>
+  <desc id="desc">A responsive interface frame with flexible content panels.</desc>
+  <defs>
+    <linearGradient id="bg" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172554"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="144" y1="136" x2="388" y2="376" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93c5fd"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+  <rect x="88" y="96" width="336" height="320" rx="64" fill="#0b1220" stroke="#60a5fa" stroke-width="18"/>
+  <path d="M97 184h318M208 193v214" fill="none" stroke="#bfdbfe" stroke-width="14"/>
+  <circle cx="132" cy="142" r="10" fill="#dbeafe"/>
+  <circle cx="164" cy="142" r="10" fill="#60a5fa"/>
+  <rect x="248" y="232" width="128" height="48" rx="24" fill="url(#accent)"/>
+  <rect x="248" y="304" width="92" height="48" rx="24" fill="#dbeafe"/>
+  <rect x="128" y="224" width="40" height="136" rx="20" fill="#1d4ed8" opacity=".9"/>
+</svg>

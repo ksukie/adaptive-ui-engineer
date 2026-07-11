@@ -1,0 +1,40 @@
+{
+  "name": "adaptive-ui-engineer",
+  "version": "0.1.0",
+  "description": "Audit, simplify, and verify resilient responsive web interfaces.",
+  "author": {
+    "name": "ksukie",
+    "url": "https://github.com/ksukie"
+  },
+  "homepage": "https://github.com/ksukie/adaptive-ui-engineer",
+  "repository": "https://github.com/ksukie/adaptive-ui-engineer",
+  "license": "Apache-2.0",
+  "keywords": [
+    "responsive-design",
+    "accessibility",
+    "cross-browser",
+    "frontend",
+    "ui-audit"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Adaptive UI Engineer",
+    "shortDescription": "Build resilient, accessible responsive interfaces.",
+    "longDescription": "Audit, refactor, and verify responsive web interfaces with evidence-based compatibility, accessibility, and complexity checks.",
+    "developerName": "ksukie",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/ksukie/adaptive-ui-engineer",
+    "defaultPrompt": [
+      "Audit this interface for responsive, accessibility, and browser compatibility issues.",
+      "Simplify this UI without changing its product intent or existing framework.",
+      "Verify this page across target viewports, zoom levels, and keyboard navigation."
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg"
+  }
+}

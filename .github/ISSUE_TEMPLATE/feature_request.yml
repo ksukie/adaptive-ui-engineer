@@ -1,0 +1,38 @@
+name: Feature request
+description: Propose a focused improvement to the Skill or auditor.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: Describe the interface task or failure mode, not only the desired implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and examples
+      description: Provide minimal public code, prompts, standards, or browser behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Proposed layer
+      options:
+        - Core SKILL.md workflow
+        - Reference material
+        - Static auditor rule
+        - Asset or template
+        - Plugin packaging
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and false-positive risks
+      description: Explain frameworks, browsers, or valid exceptions that the change must preserve.
+    validations:
+      required: true

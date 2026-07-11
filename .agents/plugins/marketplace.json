@@ -1,0 +1,20 @@
+{
+  "name": "adaptive-ui-engineer",
+  "interface": {
+    "displayName": "Adaptive UI Engineer"
+  },
+  "plugins": [
+    {
+      "name": "adaptive-ui-engineer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/adaptive-ui-engineer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

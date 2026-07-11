@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "skill": "adaptive-ui-engineer",
+  "positive": [
+    {
+      "prompt": "Audit this HTML page for mobile overflow and zoom problems. Do not edit files.",
+      "reason": "Explicit responsive audit with a read-only boundary."
+    },
+    {
+      "prompt": "Simplify the index page CSS and JavaScript without changing the soft page.",
+      "reason": "Scoped UI refactor and complexity reduction."
+    },
+    {
+      "prompt": "Make this React card grid reflow cleanly and verify it at 320 through 1440 pixels.",
+      "reason": "Framework UI adaptation plus runtime verification."
+    },
+    {
+      "prompt": "Review the radius hierarchy for these showcase panels and buttons.",
+      "reason": "Semantic visual-token and component hierarchy review."
+    },
+    {
+      "prompt": "Fix the mobile navigation focus order and reduced-motion behavior in this Nuxt app.",
+      "reason": "Responsive interaction and accessibility implementation."
+    },
+    {
+      "prompt": "Check whether our Tailwind h-screen, order utilities, and overflow-x-hidden are masking compatibility issues.",
+      "reason": "Known responsive risk patterns in a supported styling system."
+    },
+    {
+      "prompt": "The page works in Chrome but clips in iOS Safari when the address bar changes. Diagnose it.",
+      "reason": "Cross-browser viewport behavior diagnosis."
+    },
+    {
+      "prompt": "Remove the wheel-driven full-page snapping and keep the same content hierarchy.",
+      "reason": "Native scrolling restoration and interaction simplification."
+    }
+  ],
+  "negative": [
+    {
+      "prompt": "Optimize this PostgreSQL query and add an index.",
+      "reason": "Backend-only database work."
+    },
+    {
+      "prompt": "Rewrite this product announcement in a friendlier tone.",
+      "reason": "Copywriting without interface engineering."
+    },
+    {
+      "prompt": "Create a watercolor landscape image for the homepage.",
+      "reason": "Visual asset generation without interface code."
+    },
+    {
+      "prompt": "Rotate these PDF pages and merge the files.",
+      "reason": "Document processing."
+    },
+    {
+      "prompt": "Upgrade our Python API client to the latest SDK.",
+      "reason": "Backend dependency migration."
+    },
+    {
+      "prompt": "Translate this research abstract into Chinese.",
+      "reason": "Translation without UI scope."
+    },
+    {
+      "prompt": "Design a logo but do not create any webpage or component.",
+      "reason": "Standalone branding asset."
+    },
+    {
+      "prompt": "Explain how DNS resolution works.",
+      "reason": "General technical explanation."
+    }
+  ]
+}

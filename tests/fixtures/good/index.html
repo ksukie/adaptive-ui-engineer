@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resilient fixture</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="shell">
+      <nav aria-label="Primary">
+        <a href="#content">Content</a>
+      </nav>
+    </header>
+    <main id="content" class="shell stack">
+      <h1>Responsive content</h1>
+      <p>中文与 English content can wrap without changing semantic order.</p>
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Decorative test shape">
+      <iframe src="https://example.com/embed" title="Example embedded content"></iframe>
+      <button type="button" data-disclosure aria-expanded="false">Show details</button>
+      <div id="details" hidden>Details</div>
+    </main>
+  </body>
+</html>

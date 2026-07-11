@@ -1,0 +1,35 @@
+:root {
+  --gutter: clamp(1rem, 0.75rem + 1vw, 2rem);
+  --radius-card: 1.125rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 1rem/1.6 system-ui, sans-serif;
+}
+
+.shell {
+  inline-size: min(100% - 2 * var(--gutter), 70rem);
+  margin-inline: auto;
+}
+
+.stack > * + * {
+  margin-block-start: 1rem;
+}
+
+img,
+iframe {
+  max-inline-size: 100%;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}

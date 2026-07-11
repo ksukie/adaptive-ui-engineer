@@ -1,0 +1,14 @@
+# CI-only dependencies for the pinned Agent Skills validator source.
+# The validator source commit and archive hash live in ../scripts/run_skills_ref.py.
+# Every transitive wheel is fixed and SHA-256 verified by pip.
+# Hashes correspond to the release files published on PyPI as of 2026-07-11.
+click==8.3.0 \
+    --hash=sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc
+colorama==0.4.6; platform_system == "Windows" \
+    --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
+strictyaml==1.7.3 \
+    --hash=sha256:fb5c8a4edb43bebb765959e420f9b3978d7f1af88c80606c03fb420888f5d1c7
+python-dateutil==2.9.0.post0 \
+    --hash=sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427
+six==1.17.0 \
+    --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274

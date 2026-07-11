@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Adaptive UI Engineer</title>
+  <desc id="desc">A responsive interface frame with flexible content panels.</desc>
+  <rect width="512" height="512" rx="120" fill="#0f172a"/>
+  <rect x="88" y="96" width="336" height="320" rx="64" fill="#0b1220" stroke="#60a5fa" stroke-width="18"/>
+  <path d="M97 184h318M208 193v214" fill="none" stroke="#bfdbfe" stroke-width="14"/>
+  <rect x="248" y="232" width="128" height="48" rx="24" fill="#2563eb"/>
+  <rect x="248" y="304" width="92" height="48" rx="24" fill="#dbeafe"/>
+  <rect x="128" y="224" width="40" height="136" rx="20" fill="#1d4ed8"/>
+</svg>
