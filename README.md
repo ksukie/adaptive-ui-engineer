@@ -100,6 +100,26 @@ For local plugin development, add the absolute repository directory as a non-def
 
 The Skill adds no MCP server, connector, hook, or service credential. Marketplace installation may still use the host's normal authentication policy.
 
+## Update
+
+Choose the matching update path. A ZIP download or manually copied Skill does not update itself.
+
+| Previous installation | Update |
+| --- | --- |
+| Git clone | From the repository directory, run `git pull --ff-only origin main`. Preserve or commit local changes first if Git reports that the worktree is not clean. |
+| ZIP download or manual copy | Download or copy the current version, then replace the entire `plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer` directory. Do not replace only `SKILL.md`. |
+| Codex plugin marketplace | Refresh the marketplace, remove the cached plugin, reinstall it, then start a new Codex task. |
+
+For a Codex plugin installed from this marketplace:
+
+```text
+codex plugin marketplace upgrade adaptive-ui-engineer
+codex plugin remove adaptive-ui-engineer@adaptive-ui-engineer
+codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
+```
+
+If the marketplace has not been configured yet, run `codex plugin marketplace add ksukie/adaptive-ui-engineer` before installing the plugin.
+
 ## Use the Skill
 
 Invoke it explicitly:

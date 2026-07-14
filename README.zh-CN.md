@@ -100,6 +100,26 @@ codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
 
 本 Skill 不增加 MCP、连接器、Hook 或服务凭据；Marketplace 安装仍可能遵循宿主的常规身份验证策略。
 
+## 更新
+
+按旧版的获取方式选择对应的更新路径。下载的 ZIP 或手动复制的 Skill 不会自行更新。
+
+| 旧版来源 | 更新方式 |
+| --- | --- |
+| Git 克隆的仓库 | 在仓库目录执行 `git pull --ff-only origin main`。若 Git 提示工作区不干净，先保留或提交本地改动。 |
+| 下载 ZIP 或手动复制 | 下载或复制当前版本，再替换整个 `plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer` 目录；不要只替换 `SKILL.md`。 |
+| Codex Plugin marketplace | 刷新 marketplace、移除缓存中的旧插件、重新安装，然后新建 Codex 任务。 |
+
+通过此 marketplace 安装的 Codex Plugin 可执行：
+
+```text
+codex plugin marketplace upgrade adaptive-ui-engineer
+codex plugin remove adaptive-ui-engineer@adaptive-ui-engineer
+codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
+```
+
+若尚未添加该 marketplace，先执行 `codex plugin marketplace add ksukie/adaptive-ui-engineer`，再安装插件。
+
 ## 调用方式
 
 显式调用示例：
