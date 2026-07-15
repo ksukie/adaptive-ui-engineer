@@ -143,6 +143,18 @@ class PackageContractTests(unittest.TestCase):
         self.assertIn("Before editing, confirm that the sibling auditor exists", enhanced)
         self.assertIn("do not claim an N completion", enhanced)
 
+    def test_skills_keep_repository_publication_explicit_and_silent(self) -> None:
+        for skill in (S_SKILL, N_SKILL):
+            with self.subTest(skill=skill.name):
+                content = (skill / "SKILL.md").read_text(encoding="utf-8")
+                self.assertIn("## Repository-publication boundary", content)
+                self.assertIn(
+                    "Do not stage, commit, push, tag, open or update a pull request, or create a GitHub release",
+                    content,
+                )
+                self.assertIn("A request to commit authorizes only the requested commit", content)
+                self.assertIn("Do not proactively mention this default in the completion report.", content)
+
     def test_n_companion_resources_are_available(self) -> None:
         companion = N_SKILL.parent / "adaptive-ui-s"
         self.assertEqual(companion.resolve(), S_SKILL.resolve())
@@ -189,7 +201,7 @@ class PackageContractTests(unittest.TestCase):
         match = re.search(r'^TOOL_VERSION = "([^"]+)"$', script, flags=re.MULTILINE)
         self.assertIsNotNone(match)
         self.assertEqual(match.group(1), manifest["version"])
-        self.assertEqual(manifest["version"], "1.0.1")
+        self.assertEqual(manifest["version"], "1.0.2")
 
     def test_runtime_auditor_uses_only_standard_library_modules(self) -> None:
         script_path = SKILL / "scripts" / "audit_ui.py"
@@ -239,7 +251,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.1/"
+            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.2/"
             "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
             "audit-config.schema.json",
         )
@@ -286,8 +298,8 @@ class PackageContractTests(unittest.TestCase):
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
         chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 1.0.1", english)
-        self.assertIn("### 1.0.1 证据状态", chinese)
+        self.assertIn("### Evidence status for 1.0.2", english)
+        self.assertIn("### 1.0.2 证据状态", chinese)
         self.assertNotIn("future CI", english)
         self.assertNotIn("未来 CI", chinese)
         self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)

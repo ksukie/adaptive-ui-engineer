@@ -19,7 +19,7 @@ from urllib.parse import unquote, urlsplit
 
 
 TOOL_NAME = "adaptive-ui-engineer"
-TOOL_VERSION = "1.0.1"
+TOOL_VERSION = "1.0.2"
 SCHEMA_VERSION = 2
 MAX_FILE_BYTES = 2 * 1024 * 1024
 

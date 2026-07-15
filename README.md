@@ -245,7 +245,7 @@ The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/asse
 | IE11 and Safari below 16.4 | Unsupported; core semantic degradation is still preferred |
 | Python auditor | Python 3.9+ on Windows, macOS, and Linux |
 
-### Evidence status for 1.0.1
+### Evidence status for 1.0.2
 
 - Locally validated on Windows with Python 3.9, 3.10, and 3.11.
 - Unit tests and package checks cover cross-platform path behavior. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.
