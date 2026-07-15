@@ -41,7 +41,7 @@ class ValidationBootstrapError(Exception):
 def download_archive() -> bytes:
     request = urllib.request.Request(
         ARCHIVE_URL,
-        headers={"User-Agent": "adaptive-ui-engineer-ci/1.0.0"},
+        headers={"User-Agent": "adaptive-ui-engineer-ci/1.0.1"},
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response:

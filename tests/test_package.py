@@ -189,7 +189,7 @@ class PackageContractTests(unittest.TestCase):
         match = re.search(r'^TOOL_VERSION = "([^"]+)"$', script, flags=re.MULTILINE)
         self.assertIsNotNone(match)
         self.assertEqual(match.group(1), manifest["version"])
-        self.assertEqual(manifest["version"], "1.0.0")
+        self.assertEqual(manifest["version"], "1.0.1")
 
     def test_runtime_auditor_uses_only_standard_library_modules(self) -> None:
         script_path = SKILL / "scripts" / "audit_ui.py"
@@ -239,7 +239,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.0/"
+            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.1/"
             "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
             "audit-config.schema.json",
         )
@@ -286,8 +286,8 @@ class PackageContractTests(unittest.TestCase):
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
         chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 1.0.0", english)
-        self.assertIn("### 1.0.0 证据状态", chinese)
+        self.assertIn("### Evidence status for 1.0.1", english)
+        self.assertIn("### 1.0.1 证据状态", chinese)
         self.assertNotIn("future CI", english)
         self.assertNotIn("未来 CI", chinese)
         self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)

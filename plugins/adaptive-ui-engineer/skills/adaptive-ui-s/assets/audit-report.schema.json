@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.0/plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-report.schema.json",
+  "$id": "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.1/plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-report.schema.json",
   "title": "Adaptive UI Engineer audit report",
   "type": "object",
   "additionalProperties": false,
