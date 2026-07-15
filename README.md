@@ -99,7 +99,7 @@ cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-n \
   "$HOME/.agents/skills/adaptive-ui-n"
 ```
 
-Client discovery and invocation details vary. A client may discover a Skill from `SKILL.md`; in a manual installation, keep the `adaptive-ui-s` and `adaptive-ui-n` directories together so N can find the bundled auditor, references, and assets in S. `agents/openai.yaml` is an optional Codex presentation extension.
+Client discovery and invocation details vary. A client may discover a Skill from `SKILL.md`; in a manual installation, keep the `adaptive-ui-s` and `adaptive-ui-n` directories together so N can find the bundled auditor, references, and assets in S. When that sibling auditor is absent, N must not claim enhanced completion. `agents/openai.yaml` is an optional Codex presentation extension.
 
 ### Codex plugin after the repository is published
 
@@ -143,14 +143,14 @@ v1.0.0 replaces the former single `$adaptive-ui-engineer` invocation with two ex
 
 ## Explicit invocation and modes
 
-In Codex, select `@Adaptive-UI-S` or `@Adaptive-UI-N`. In text-based clients, invoke `$adaptive-ui-s` or `$adaptive-ui-n` in the current message.
+In Codex, select one of the bundled Skill labels: `@Adaptive-UI-S` or `@Adaptive-UI-N`. In text-based clients, invoke `$adaptive-ui-s` or `$adaptive-ui-n` in the current message. Some hosts may also show the `Adaptive UI Engineer` plugin parent; it is a container, not a third workflow, so select S or N when the workflow distinction matters.
 
 | Skill | Use it for | Completion behavior |
 | --- | --- | --- |
 | `Adaptive-UI-S` | Standard responsive UI audits, implementation, refactoring, and a final audit explicitly requested after intermittent work. | Never adds a final audit automatically. A later, explicit S request can audit the named task scope read-only. |
 | `Adaptive-UI-N` | A UI implementation, repair, or refactor that must include a final review. | Before reporting completion, audits this task's changed UI files and directly related styles. It does not scan or repair unrelated historical work. |
 
-Activation is per current message only. Installing either Skill, mentioning a matching UI problem, or having invoked it earlier in the same conversation does not activate it now. If the current message names neither Skill, neither workflow is used. If it names both, N takes precedence.
+Both Skills declare explicit-only invocation. In Codex, `allow_implicit_invocation: false` prevents prompt-based implicit invocation; their instructions also reject carrying a past invocation into a later message. After each installation or update, verify the intended per-message contract in a fresh chat: invoke S or N once, then send a matching UI request without `@` or `$` and confirm no implicit Skill is used. If the current message explicitly names both Skills, N takes precedence.
 
 Examples:
 

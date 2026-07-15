@@ -17,7 +17,7 @@ Implement the requested responsive UI change, then complete a bounded review of 
 
 ## Shared companion resources
 
-Adaptive-UI-N is a companion to `adaptive-ui-s`; both directories must be installed as siblings. Resolve `<n-skill-root>` as the directory containing this file, then resolve `<s-skill-root>` as its parent directory plus `adaptive-ui-s`. Reuse the bundled auditor at `<s-skill-root>/scripts/audit_ui.py` and only the relevant material under `<s-skill-root>/references/` and `<s-skill-root>/assets/`. Do not install a dependency solely for this workflow.
+Adaptive-UI-N is a companion to `adaptive-ui-s`; both directories must be installed as siblings. Resolve `<n-skill-root>` as the directory containing this file, then resolve `<s-skill-root>` as its parent directory plus `adaptive-ui-s`. Reuse the bundled auditor at `<s-skill-root>/scripts/audit_ui.py` and only the relevant material under `<s-skill-root>/references/` and `<s-skill-root>/assets/`. Before editing, confirm that the sibling auditor exists. If it is missing, explain that the complete S-and-N bundle is required; do not claim an N completion, and ask the user to reinstall the bundle or explicitly choose S. Do not install a dependency solely for this workflow.
 
 ## Required workflow
 
@@ -25,7 +25,7 @@ Adaptive-UI-N is a companion to `adaptive-ui-s`; both directories must be instal
 
 1. Record the requested scope, allowed and forbidden files, preserved behavior, target users, and verification limits.
 2. Inspect the affected component, its entry point, styles, imports, existing tests, package metadata, and local instructions.
-3. When Git is available, inspect `git status --short` and the relevant diff before editing. Treat pre-existing modified or untracked paths as baseline exclusions unless the user explicitly includes them. Never reset, stash, discard, or silently absorb those changes.
+3. When Git is available, inspect `git status --short` and the relevant diff before editing. Record pre-existing modified or untracked paths as a baseline and never claim their existing hunks as task-owned. If this task must edit a baseline-modified path, keep that file in scope: identify the task-owned hunk separately, audit it and its direct style surface, and label untouched baseline hunks as excluded. Never reset, stash, discard, or silently absorb those changes.
 4. Identify the narrow target for static auditing and the directly related style surface: imported CSS, CSS Modules, scoped styles, CSS-in-JS, utilities, tokens used by the changed component, and necessary layout wrappers.
 
 ### 2. Implement the smallest coherent change
@@ -39,7 +39,7 @@ Adaptive-UI-N is a companion to `adaptive-ui-s`; both directories must be instal
 
 This review is required before claiming the task is complete, even if the implementation itself appears small.
 
-1. Determine the task-owned changes made after the baseline. Do not claim ownership of pre-existing edits merely because they are present in the working tree.
+1. Determine the task-owned changes made after the baseline, including a task-owned hunk inside a pre-existing modified file. Do not claim ownership of pre-existing edits merely because they are present in the working tree.
 2. Inspect every changed UI file and its directly related style surface. Review reflow, intrinsic sizing, overflow, viewport units, content priority, typography, visual hierarchy, radius and spacing consistency when relevant, focus and keyboard behavior, motion, and compatibility-sensitive enhancements.
 3. Do not turn this into a whole-repository audit. Do not fix or report historical, unrelated findings except to name a concrete blocking interaction with the requested change.
 4. Run the bundled static auditor against the narrow affected target when Python 3.9+ is available:
@@ -61,7 +61,7 @@ Treat its output as triage, not proof of runtime behavior. Read the relevant com
 Lead with the result and include all of the following:
 
 1. task scope and files changed;
-2. baseline exclusions, if any;
+2. baseline exclusions, including any untouched pre-existing hunks in an in-scope file;
 3. post-change style-audit scope, findings, and fixes, or an explicit statement that no directly related style file applied;
 4. static, test, build, and browser verification with pass/fail/not-run status;
 5. residual risks, unverified environments, and intentionally untouched unrelated findings.

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+### Fixed
+
+- Shortened the `Adaptive-UI-N` UI description to the supported metadata length.
+- Made N preserve task-owned hunks inside pre-existing modified files instead of excluding the whole file from its required post-change audit.
+- Made N stop and request the complete companion bundle when its sibling S auditor is unavailable.
+
+### Changed
+
+- Clarified that the two bundled Skill labels and per-message invocation contract require a live Codex acceptance check after installation or update.
+
 ## [1.0.0] - 2026-07-15
 
 ### Added

@@ -118,6 +118,10 @@ class PackageContractTests(unittest.TestCase):
                 self.assertIn(invocation, content)
                 self.assertIn("allow_implicit_invocation: false", content)
                 self.assertNotIn("allow_implicit_invocation: true", content)
+                match = re.search(r'^  short_description: "([^"]+)"$', content, flags=re.MULTILINE)
+                self.assertIsNotNone(match)
+                self.assertGreaterEqual(len(match.group(1)), 25)
+                self.assertLessEqual(len(match.group(1)), 64)
 
         content = (S_SKILL / "agents" / "openai.yaml").read_text(encoding="utf-8")
         for relative in ("assets/icon-small.svg", "assets/icon-large.svg"):
@@ -134,7 +138,16 @@ class PackageContractTests(unittest.TestCase):
         self.assertIn("User-requested final review after intermittent work", standard)
         self.assertIn("This review is required before claiming the task is complete", enhanced)
         self.assertIn("Do not turn this into a whole-repository audit", enhanced)
-        self.assertIn("Treat pre-existing modified or untracked paths as baseline exclusions", enhanced)
+        self.assertIn("keep that file in scope", enhanced)
+        self.assertIn("task-owned hunk", enhanced)
+        self.assertIn("Before editing, confirm that the sibling auditor exists", enhanced)
+        self.assertIn("do not claim an N completion", enhanced)
+
+    def test_n_companion_resources_are_available(self) -> None:
+        companion = N_SKILL.parent / "adaptive-ui-s"
+        self.assertEqual(companion.resolve(), S_SKILL.resolve())
+        self.assertTrue((companion / "scripts" / "audit_ui.py").is_file())
+        self.assertTrue((companion / "references" / "verification-protocol.md").is_file())
 
     def test_rule_catalog_matches_implemented_rule_ids(self) -> None:
         script = (SKILL / "scripts" / "audit_ui.py").read_text(encoding="utf-8")
@@ -279,8 +292,10 @@ class PackageContractTests(unittest.TestCase):
         self.assertNotIn("未来 CI", chinese)
         self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)
         self.assertIn("`adaptive-ui-s` 与 `adaptive-ui-n` 保持在同级", chinese)
-        self.assertIn("Activation is per current message only", english)
-        self.assertIn("启用仅对当前消息有效", chinese)
+        self.assertIn("Both Skills declare explicit-only invocation", english)
+        self.assertIn("plugin parent; it is a container", english)
+        self.assertIn("两个 Skill 都声明为仅显式调用", chinese)
+        self.assertIn("插件父级；它只是容器", chinese)
 
     def test_no_scaffold_placeholders_remain(self) -> None:
         offenders = []

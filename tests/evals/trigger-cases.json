@@ -72,6 +72,10 @@
         {
           "prompt": "Use $adaptive-ui-n to repair this Tailwind overflow issue without changing sibling pages, then inspect the modified component and directly related utilities before you finish.",
           "reason": "Explicit narrow UI repair with scope-limited post-change auditing."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to fix the checkout card layout. Card.tsx already contains unrelated unstaged edits, so keep the file in scope, audit only this task's hunk and direct styles, and report the baseline separately.",
+          "reason": "Explicit N work preserves the distinction between pre-existing and task-owned hunks."
         }
       ],
       "negative": [

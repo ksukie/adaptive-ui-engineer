@@ -35,8 +35,10 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tes
 - [ ] Run the current Codex Skill Creator structural validator.
 - [ ] Run the current Codex Plugin Creator manifest validator.
 - [ ] Run the hash-locked open Agent Skills reference validator.
-- [ ] Confirm Codex surfaces `Adaptive-UI-S` and `Adaptive-UI-N`, and that each is inactive unless explicitly selected in the current message.
+- [ ] Confirm Codex surfaces the bundled `Adaptive-UI-S` and `Adaptive-UI-N` labels. If the host also shows the `Adaptive UI Engineer` plugin parent, treat it as a container rather than a third workflow.
+- [ ] In a fresh Codex chat, invoke each Skill once, then send a matching UI request without `@` or `$`; verify that no implicit Skill invocation occurs on that later message.
 - [ ] Smoke-test S's read-only final review and N's required, scoped post-change style audit without expanding either into a whole-repository review.
+- [ ] Smoke-test N against a task that edits a file with pre-existing changes; verify that the report separates baseline and task-owned hunks.
 - [ ] Confirm that no validation step created caches, reports, temporary packages, or user-project changes in the release tree.
 - [ ] Perform one read-only smoke audit of a real interface and record any browser environments that were not tested.
 

@@ -35,6 +35,7 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tes
 - Keep the description precise enough for positive and negative trigger cases.
 - Preserve the explicit-only activation boundary: neither Skill may activate from a matching request or a prior conversation invocation.
 - Keep `adaptive-ui-n` bounded to task-owned changes and directly related styles; it must not become a whole-repository audit.
+- When N edits a file with pre-existing changes, preserve the hunk-level distinction between baseline work and task-owned work in the audit report.
 
 ### Auditor rules
 

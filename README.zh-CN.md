@@ -99,7 +99,7 @@ cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-n \
   "$HOME/.agents/skills/adaptive-ui-n"
 ```
 
-不同客户端的发现和调用方式可能不同。客户端可以仅通过 `SKILL.md` 发现 Skill；手动安装时，必须让 `adaptive-ui-s` 与 `adaptive-ui-n` 保持在同级，N 才能找到 S 内随附的审计器、引用资料和资源；`agents/openai.yaml` 是可选的 Codex 展示扩展。
+不同客户端的发现和调用方式可能不同。客户端可以仅通过 `SKILL.md` 发现 Skill；手动安装时，必须让 `adaptive-ui-s` 与 `adaptive-ui-n` 保持在同级，N 才能找到 S 内随附的审计器、引用资料和资源；缺少这个同级审计器时，N 不得声称已完成增强流程；`agents/openai.yaml` 是可选的 Codex 展示扩展。
 
 ### 仓库发布后的 Codex Plugin 安装
 
@@ -143,14 +143,14 @@ v1.0.0 将原本单一的 `$adaptive-ui-engineer` 调用拆成两个显式选择
 
 ## 显式调用与模式
 
-在 Codex 中选择 `@Adaptive-UI-S` 或 `@Adaptive-UI-N`；在文本客户端中，于当前消息写入 `$adaptive-ui-s` 或 `$adaptive-ui-n`。
+在 Codex 中选择其中一个随附 Skill 标签：`@Adaptive-UI-S` 或 `@Adaptive-UI-N`；在文本客户端中，于当前消息写入 `$adaptive-ui-s` 或 `$adaptive-ui-n`。某些宿主也可能显示 `Adaptive UI Engineer` 插件父级；它只是容器而非第三种工作流，需要区分工作流时请选择 S 或 N。
 
 | Skill | 适用场景 | 完成行为 |
 | --- | --- | --- |
 | `Adaptive-UI-S` | 标准响应式 UI 审计、实现、重构，以及断续工作结束后由用户显式要求的最终审查。 | 不会自动增加最终审查。后续消息显式调用 S 时，可只读审查用户指定的任务范围。 |
 | `Adaptive-UI-N` | 需要最终审查的 UI 实现、修复或重构。 | 在报告完成前，审查本任务改动的 UI 文件和直接相关样式；不会扫描或修复无关的历史问题。 |
 
-启用仅对当前消息有效。已安装、描述了匹配的 UI 问题，或同一对话中曾经调用过，都不会让它在本次消息自动启用。当前消息未指名任一 Skill 时，两者都不会使用；同时指名两者时，N 优先。
+两个 Skill 都声明为仅显式调用。在 Codex 中，`allow_implicit_invocation: false` 会阻止按提示内容隐式调用；Skill 指令也禁止将此前调用延续到后续消息。每次安装或更新后，都应在新对话中验证预期的逐消息契约：先调用一次 S 或 N，再发送一条不含 `@` 或 `$` 的匹配 UI 请求，确认没有隐式使用 Skill。同一当前消息同时显式指名两者时，N 优先。
 
 示例：
 
