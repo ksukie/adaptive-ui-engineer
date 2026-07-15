@@ -152,6 +152,8 @@ v1.0.0 将原本单一的 `$adaptive-ui-engineer` 调用拆成两个显式选择
 
 两个 Skill 都声明为仅显式调用。在 Codex 中，`allow_implicit_invocation: false` 会阻止按提示内容隐式调用；Skill 指令也禁止将此前调用延续到后续消息。每次安装或更新后，都应在新对话中验证预期的逐消息契约：先调用一次 S 或 N，再发送一条不含 `@` 或 `$` 的匹配 UI 请求，确认没有隐式使用 Skill。同一当前消息同时显式指名两者时，N 优先。
 
+需要查看标准对比和调用示例时，可查阅随插件提供的[模式选择说明](plugins/adaptive-ui-engineer/skills/adaptive-ui-s/references/mode-selection.md)。仅询问模式区别不会激活任一工作流，也不会授权项目操作。
+
 示例：
 
 ```text
@@ -243,7 +245,7 @@ Schema 位于 `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-co
 | IE11 与 Safari 16.4 以下 | 不支持，但仍优先保证核心语义降级 |
 | Python 审计器 | Windows、macOS、Linux 上的 Python 3.9+ |
 
-### 1.0.2 证据状态
+### 1.0.3 证据状态
 
 - 已在 Windows 与 Python 3.9、3.10、3.11 上完成本地验证。
 - 单元测试和包校验覆盖跨平台路径行为；仓库 CI workflow 已配置 Windows、macOS、Linux 和 Python 3.9–3.13。

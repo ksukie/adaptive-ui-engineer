@@ -152,6 +152,10 @@ In Codex, select one of the bundled Skill labels: `@Adaptive-UI-S` or `@Adaptive
 
 Both Skills declare explicit-only invocation. In Codex, `allow_implicit_invocation: false` prevents prompt-based implicit invocation; their instructions also reject carrying a past invocation into a later message. After each installation or update, verify the intended per-message contract in a fresh chat: invoke S or N once, then send a matching UI request without `@` or `$` and confirm no implicit Skill is used. If the current message explicitly names both Skills, N takes precedence.
 
+For the canonical S/N comparison and example prompts, consult the bundled
+[mode-selection guide](plugins/adaptive-ui-engineer/skills/adaptive-ui-s/references/mode-selection.md).
+A question about the modes alone does not activate either workflow or authorize project work.
+
 Examples:
 
 ```text
@@ -245,7 +249,7 @@ The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/asse
 | IE11 and Safari below 16.4 | Unsupported; core semantic degradation is still preferred |
 | Python auditor | Python 3.9+ on Windows, macOS, and Linux |
 
-### Evidence status for 1.0.2
+### Evidence status for 1.0.3
 
 - Locally validated on Windows with Python 3.9, 3.10, and 3.11.
 - Unit tests and package checks cover cross-platform path behavior. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.

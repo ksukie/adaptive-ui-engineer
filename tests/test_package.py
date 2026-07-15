@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "adaptive-ui-engineer"
 S_SKILL = PLUGIN / "skills" / "adaptive-ui-s"
 N_SKILL = PLUGIN / "skills" / "adaptive-ui-n"
+MODE_SELECTION_GUIDE = S_SKILL / "references" / "mode-selection.md"
 SKILL = S_SKILL
 SKILLS = {
     "adaptive-ui-s": S_SKILL,
@@ -42,6 +43,7 @@ class PackageContractTests(unittest.TestCase):
             S_SKILL / "assets" / "audit-report.schema.json",
             N_SKILL / "SKILL.md",
             N_SKILL / "agents" / "openai.yaml",
+            MODE_SELECTION_GUIDE,
         ]
         self.assertEqual([str(path) for path in paths if not path.is_file()], [])
 
@@ -160,6 +162,24 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(companion.resolve(), S_SKILL.resolve())
         self.assertTrue((companion / "scripts" / "audit_ui.py").is_file())
         self.assertTrue((companion / "references" / "verification-protocol.md").is_file())
+        self.assertTrue((companion / "references" / "mode-selection.md").is_file())
+
+    def test_shared_mode_selection_guide_preserves_the_two_skill_boundary(self) -> None:
+        guide = MODE_SELECTION_GUIDE.read_text(encoding="utf-8")
+        standard = (S_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        enhanced = (N_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("`Adaptive-UI-S`", guide)
+        self.assertIn("`Adaptive-UI-N`", guide)
+        self.assertIn("does not activate either workflow", guide)
+        self.assertIn("$adaptive-ui-s", guide)
+        self.assertIn("$adaptive-ui-n", guide)
+        self.assertIn("[mode-selection.md](references/mode-selection.md)", standard)
+        self.assertIn("choosing S or N and invocation examples", standard)
+        self.assertIn("<s-skill-root>/references/mode-selection.md", enhanced)
+        discovered = sorted(
+            path.name for path in (PLUGIN / "skills").iterdir() if (path / "SKILL.md").is_file()
+        )
+        self.assertEqual(discovered, ["adaptive-ui-n", "adaptive-ui-s"])
 
     def test_rule_catalog_matches_implemented_rule_ids(self) -> None:
         script = (SKILL / "scripts" / "audit_ui.py").read_text(encoding="utf-8")
@@ -201,7 +221,7 @@ class PackageContractTests(unittest.TestCase):
         match = re.search(r'^TOOL_VERSION = "([^"]+)"$', script, flags=re.MULTILINE)
         self.assertIsNotNone(match)
         self.assertEqual(match.group(1), manifest["version"])
-        self.assertEqual(manifest["version"], "1.0.2")
+        self.assertEqual(manifest["version"], "1.0.3")
 
     def test_runtime_auditor_uses_only_standard_library_modules(self) -> None:
         script_path = SKILL / "scripts" / "audit_ui.py"
@@ -251,7 +271,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.2/"
+            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.3/"
             "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
             "audit-config.schema.json",
         )
@@ -298,8 +318,10 @@ class PackageContractTests(unittest.TestCase):
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
         chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 1.0.2", english)
-        self.assertIn("### 1.0.2 证据状态", chinese)
+        self.assertIn("### Evidence status for 1.0.3", english)
+        self.assertIn("### 1.0.3 证据状态", chinese)
+        self.assertIn("mode-selection guide", english)
+        self.assertIn("模式选择说明", chinese)
         self.assertNotIn("future CI", english)
         self.assertNotIn("未来 CI", chinese)
         self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)

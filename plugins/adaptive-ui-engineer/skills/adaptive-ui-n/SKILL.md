@@ -19,6 +19,14 @@ Implement the requested responsive UI change, then complete a bounded review of 
 
 Adaptive-UI-N is a companion to `adaptive-ui-s`; both directories must be installed as siblings. Resolve `<n-skill-root>` as the directory containing this file, then resolve `<s-skill-root>` as its parent directory plus `adaptive-ui-s`. Reuse the bundled auditor at `<s-skill-root>/scripts/audit_ui.py` and only the relevant material under `<s-skill-root>/references/` and `<s-skill-root>/assets/`. Before editing, confirm that the sibling auditor exists. If it is missing, explain that the complete S-and-N bundle is required; do not claim an N completion, and ask the user to reinstall the bundle or explicitly choose S. Do not install a dependency solely for this workflow.
 
+### Mode-selection questions
+
+When a current message explicitly invokes Adaptive-UI-N and asks how S and N differ,
+which one to choose, or requests invocation examples, read
+`<s-skill-root>/references/mode-selection.md`. Answer only that selection question
+unless the request separately authorizes work. Do not inspect a project, edit files,
+run tests, or activate S merely because the guide recommends it.
+
 ## Repository-publication boundary
 
 - Keep repository-writing and GitHub-publication actions opt-in. Do not stage, commit, push, tag, open or update a pull request, or create a GitHub release unless the current user request explicitly asks for that specific action.

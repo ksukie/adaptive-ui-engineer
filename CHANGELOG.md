@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-07-15
+
+### Added
+
+- Added a shared in-plugin mode-selection guide with S/N comparisons and invocation examples, without adding a third Skill.
+
 ## [1.0.2] - 2026-07-15
 
 ### Changed
@@ -74,7 +80,8 @@ All notable changes to this project will be documented in this file. The format 
 - Made report metadata root-relative by default, added opt-in evidence redaction and absolute paths, sanitized skipped-file errors, and made explicit output atomic with linked-destination and linked-parent refusal.
 - Pinned GitHub Actions to immutable commits, authenticated the fixed Agent Skills validator source archive by SHA-256, and locked every CI-only Python dependency by version and hash.
 
-[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.1...v1.0.0

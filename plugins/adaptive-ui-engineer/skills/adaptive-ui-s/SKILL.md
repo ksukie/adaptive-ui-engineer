@@ -24,6 +24,14 @@ For such an audit:
 3. Do not infer permission to review the whole repository or fix historical, unrelated findings merely because earlier work happened in the conversation.
 4. Report the inspected scope, findings, evidence or verification performed, and anything outside scope or unverified.
 
+### Mode-selection questions
+
+When a current message explicitly invokes Adaptive-UI-S and asks how S and N differ,
+which one to choose, or requests invocation examples, read
+[mode-selection.md](references/mode-selection.md). Answer only that selection question
+unless the request separately authorizes work. Do not inspect a project, edit files,
+run tests, or activate N merely because the guide recommends it.
+
 ## Operating contract
 
 1. Derive the operation from the request:
@@ -144,6 +152,7 @@ Use [audit-report-template.md](assets/audit-report-template.md) when the user re
 
 ## Resource map
 
+- [mode-selection.md](references/mode-selection.md): choosing S or N and invocation examples.
 - [responsive-layout.md](references/responsive-layout.md): intrinsic layout, overflow, viewport units, media, tables, typography, and radius tokens.
 - [accessibility-interaction.md](references/accessibility-interaction.md): semantics, navigation, focus, targets, motion, contrast, and scroll behavior.
 - [browser-compatibility.md](references/browser-compatibility.md): support baseline, progressive enhancement, and claim language.
