@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-15
+
+### Added
+
+- Added `Adaptive-UI-N`, an explicit-only UI implementation workflow that requires a bounded post-change audit of task-owned files and directly related styles before completion.
+- Added a documented v0.2.1-to-v1.0.0 migration path for manual copies and Codex plugin installations.
+
+### Changed
+
+- Replaced the single `Adaptive UI Engineer` Skill with `Adaptive-UI-S` for standard work and `Adaptive-UI-N` for enhanced implementation-and-review work.
+- Made both Skills explicit-only per current message; installation, task matching, and earlier conversation invocations no longer activate either workflow.
+- Renamed the standard Skill invocation from `$adaptive-ui-engineer` to `$adaptive-ui-s`; `$adaptive-ui-n` is the new enhanced invocation.
+
 ## [0.2.1] - 2026-07-15
 
 ### Fixed
@@ -43,7 +56,8 @@ All notable changes to this project will be documented in this file. The format 
 - Made report metadata root-relative by default, added opt-in evidence redaction and absolute paths, sanitized skipped-file errors, and made explicit output atomic with linked-destination and linked-parent refusal.
 - Pinned GitHub Actions to immutable commits, authenticated the fixed Agent Skills validator source archive by SHA-256, and locked every CI-only Python dependency by version and hash.
 
-[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ksukie/adaptive-ui-engineer/releases/tag/v0.1.0

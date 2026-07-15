@@ -22,17 +22,19 @@ The reference Agent Skills validator and JSON Schema report validator are CI-onl
 Run the auditor manually against a fixture:
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py tests/fixtures/bad --format json --fail-on none
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tests/fixtures/bad --format json --fail-on none
 ```
 
 ## Contribution rules
 
 ### Skill instructions
 
-- Keep `SKILL.md` imperative, focused, and below 500 lines.
+- Keep each `SKILL.md` imperative, focused, and below 500 lines.
 - Put detailed domain knowledge in one-level-deep reference files.
 - Link every bundled reference, script, or asset from `SKILL.md` or product metadata.
 - Keep the description precise enough for positive and negative trigger cases.
+- Preserve the explicit-only activation boundary: neither Skill may activate from a matching request or a prior conversation invocation.
+- Keep `adaptive-ui-n` bounded to task-owned changes and directly related styles; it must not become a whole-repository audit.
 
 ### Auditor rules
 

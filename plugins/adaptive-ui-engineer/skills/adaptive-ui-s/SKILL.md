@@ -1,11 +1,28 @@
 ---
-name: adaptive-ui-engineer
-description: Audit, design, refactor, and verify resilient responsive web interfaces across HTML/CSS and common frontend frameworks. Use when a request materially involves responsive layout or reflow, breakpoints, overflow, viewport units, mobile navigation, accessibility interactions, CSS complexity, visual hierarchy or radius systems, cross-browser compatibility, or scoped interface simplification that preserves product intent. Do not use for backend-only work, standalone visual assets, copywriting, or routine cosmetic front-end changes that do not affect those concerns.
+name: adaptive-ui-s
+description: Standard, explicitly invoked responsive UI audit and implementation workflow across HTML/CSS and common frontend frameworks. Use only when the current user message explicitly invokes Adaptive-UI-S. Never activate implicitly or carry an invocation into later messages. Use Adaptive-UI-N for an implementation task that requires a mandatory post-change style audit.
 ---
 
-# Adaptive UI Engineer
+# Adaptive-UI-S
 
 Build interfaces that reflow from content and constraints, preserve product intent, and remain usable under zoom, keyboard navigation, assistive settings, and supported browsers.
+
+## Activation boundary
+
+- Activate only when the current user message explicitly invokes this Skill: `@Adaptive-UI-S` in a supported picker or `$adaptive-ui-s` in a text-based client.
+- Do not activate from a matching task description, an installed state, an earlier message, or an earlier invocation in the same conversation. If the current message names neither Adaptive-UI-S nor Adaptive-UI-N, use neither Skill.
+- If the same current message explicitly invokes both Skills, Adaptive-UI-N owns the request because it includes the standard workflow plus its required post-change audit.
+
+### User-requested final review after intermittent work
+
+Adaptive-UI-S never adds a completion audit automatically. It can perform a final audit only when a current message explicitly invokes Adaptive-UI-S and asks for that review.
+
+For such an audit:
+
+1. Treat it as read-only unless the current request separately authorizes edits.
+2. Establish the user-designated task scope, changed files, or component before reviewing. Inspect only that scope and directly related styles, imports, tokens, or layout wrappers.
+3. Do not infer permission to review the whole repository or fix historical, unrelated findings merely because earlier work happened in the conversation.
+4. Report the inspected scope, findings, evidence or verification performed, and anything outside scope or unverified.
 
 ## Operating contract
 

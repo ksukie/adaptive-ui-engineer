@@ -1,0 +1,7 @@
+interface:
+  display_name: "Adaptive-UI-N"
+  short_description: "Explicit UI implementation with a required scoped post-change style audit"
+  brand_color: "#2563EB"
+  default_prompt: "Use $adaptive-ui-n to implement this UI change, then audit this task's changed files and directly related styles."
+policy:
+  allow_implicit_invocation: false

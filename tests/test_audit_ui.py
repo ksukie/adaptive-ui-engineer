@@ -16,7 +16,7 @@ SCRIPT = (
     / "plugins"
     / "adaptive-ui-engineer"
     / "skills"
-    / "adaptive-ui-engineer"
+    / "adaptive-ui-s"
     / "scripts"
     / "audit_ui.py"
 )
@@ -71,7 +71,7 @@ class AuditCliTests(unittest.TestCase):
     def test_version(self) -> None:
         result = self.run_cli("--version")
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout.strip(), "0.2.1")
+        self.assertEqual(result.stdout.strip(), "1.0.0")
 
     def test_good_fixture_has_no_high_priority_findings(self) -> None:
         result, payload = self.run_json(FIXTURES / "good", "--fail-on", "none")

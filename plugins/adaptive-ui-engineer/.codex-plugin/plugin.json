@@ -1,7 +1,7 @@
 {
   "name": "adaptive-ui-engineer",
-  "version": "0.2.1",
-  "description": "Audit, simplify, and verify resilient responsive web interfaces.",
+  "version": "1.0.0",
+  "description": "Explicit S and N workflows for resilient responsive web interfaces.",
   "author": {
     "name": "ksukie",
     "url": "https://github.com/ksukie"
@@ -19,8 +19,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Adaptive UI Engineer",
-    "shortDescription": "Build resilient, accessible responsive interfaces.",
-    "longDescription": "Audit, refactor, and verify responsive web interfaces with evidence-based compatibility, accessibility, and complexity checks.",
+    "shortDescription": "Choose explicit standard or enhanced responsive UI workflows.",
+    "longDescription": "Use Adaptive-UI-S for standard responsive UI work, or Adaptive-UI-N for implementation with a required scoped post-change style audit.",
     "developerName": "ksukie",
     "category": "Developer Tools",
     "capabilities": [
@@ -29,9 +29,8 @@
     ],
     "websiteURL": "https://github.com/ksukie/adaptive-ui-engineer",
     "defaultPrompt": [
-      "Audit this interface for responsive, accessibility, and browser compatibility issues.",
-      "Simplify this UI without changing its product intent or existing framework.",
-      "Verify this page across target viewports, zoom levels, and keyboard navigation."
+      "Use $adaptive-ui-s for a focused responsive UI audit or scoped refactor.",
+      "Use $adaptive-ui-n to implement this UI change and complete its required post-change style audit."
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.svg",

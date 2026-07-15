@@ -1,80 +1,105 @@
 {
-  "schema_version": 1,
-  "skill": "adaptive-ui-engineer",
-  "positive": [
+  "schema_version": 2,
+  "skills": [
     {
-      "prompt": "Audit this HTML page for mobile overflow and zoom problems. Do not edit files.",
-      "reason": "Explicit responsive audit with a read-only boundary."
+      "name": "adaptive-ui-s",
+      "display_name": "Adaptive-UI-S",
+      "positive": [
+        {
+          "prompt": "Use $adaptive-ui-s to audit this HTML page for mobile overflow and zoom problems. Do not edit files.",
+          "reason": "Explicit standard responsive audit with a read-only boundary."
+        },
+        {
+          "prompt": "Use $adaptive-ui-s to simplify the index page CSS and JavaScript without changing sibling pages.",
+          "reason": "Explicit scoped UI refactor under the standard workflow."
+        },
+        {
+          "prompt": "Use $adaptive-ui-s to review the final checkout task after our intermittent work. Inspect only the changed checkout files and their direct styles; do not edit.",
+          "reason": "Explicit, user-requested final review after intermittent work."
+        },
+        {
+          "prompt": "Use $adaptive-ui-s to diagnose why this React card grid clips in iOS Safari when the address bar changes.",
+          "reason": "Explicit cross-browser responsive diagnosis."
+        },
+        {
+          "prompt": "Use $adaptive-ui-s to normalize this card radius hierarchy and verify keyboard focus remains visible.",
+          "reason": "Explicit visual-hierarchy and accessibility work in the standard workflow."
+        }
+      ],
+      "negative": [
+        {
+          "prompt": "Optimize this PostgreSQL query and add an index.",
+          "reason": "Backend-only database work."
+        },
+        {
+          "prompt": "Rewrite this product announcement in a friendlier tone.",
+          "reason": "Copywriting without interface engineering."
+        },
+        {
+          "prompt": "Create a watercolor landscape image for the homepage.",
+          "reason": "Visual asset generation without interface code."
+        },
+        {
+          "prompt": "Change this React button from blue to green without changing layout, interaction, or accessibility.",
+          "reason": "Routine cosmetic front-end change outside the Skill's adaptive-UI scope."
+        },
+        {
+          "prompt": "Fix the typo in this Vue button label without changing behavior.",
+          "reason": "Copy-only component edit outside the Skill's adaptive-UI scope."
+        },
+        {
+          "prompt": "Because Adaptive-UI-S was used earlier in this conversation, run it again automatically for this unrelated task.",
+          "reason": "A prior invocation never activates the Skill for a later message."
+        }
+      ]
     },
     {
-      "prompt": "Simplify the index page CSS and JavaScript without changing sibling pages.",
-      "reason": "Scoped UI refactor and complexity reduction."
-    },
-    {
-      "prompt": "Make this React card grid reflow cleanly and verify it at 320 through 1440 pixels.",
-      "reason": "Framework UI adaptation plus runtime verification."
-    },
-    {
-      "prompt": "Review the radius hierarchy for these showcase panels and buttons.",
-      "reason": "Semantic visual-token and component hierarchy review."
-    },
-    {
-      "prompt": "Fix the mobile navigation focus order and reduced-motion behavior in this Nuxt app.",
-      "reason": "Responsive interaction and accessibility implementation."
-    },
-    {
-      "prompt": "Check whether our Tailwind h-screen, order utilities, and overflow-x-hidden are masking compatibility issues.",
-      "reason": "Known responsive risk patterns in a supported styling system."
-    },
-    {
-      "prompt": "The page works in Chrome but clips in iOS Safari when the address bar changes. Diagnose it.",
-      "reason": "Cross-browser viewport behavior diagnosis."
-    },
-    {
-      "prompt": "Remove the wheel-driven full-page snapping and keep the same content hierarchy.",
-      "reason": "Native scrolling restoration and interaction simplification."
-    }
-  ],
-  "negative": [
-    {
-      "prompt": "Optimize this PostgreSQL query and add an index.",
-      "reason": "Backend-only database work."
-    },
-    {
-      "prompt": "Rewrite this product announcement in a friendlier tone.",
-      "reason": "Copywriting without interface engineering."
-    },
-    {
-      "prompt": "Create a watercolor landscape image for the homepage.",
-      "reason": "Visual asset generation without interface code."
-    },
-    {
-      "prompt": "Rotate these PDF pages and merge the files.",
-      "reason": "Document processing."
-    },
-    {
-      "prompt": "Upgrade our Python API client to the latest SDK.",
-      "reason": "Backend dependency migration."
-    },
-    {
-      "prompt": "Translate this research abstract into Chinese.",
-      "reason": "Translation without UI scope."
-    },
-    {
-      "prompt": "Design a logo but do not create any webpage or component.",
-      "reason": "Standalone branding asset."
-    },
-    {
-      "prompt": "Explain how DNS resolution works.",
-      "reason": "General technical explanation."
-    },
-    {
-      "prompt": "Change this React button from blue to green without changing layout, interaction, or accessibility.",
-      "reason": "Routine cosmetic front-end change outside the Skill's adaptive-UI scope."
-    },
-    {
-      "prompt": "Fix the typo in this Vue button label without changing behavior.",
-      "reason": "Copy-only component edit outside the Skill's adaptive-UI scope."
+      "name": "adaptive-ui-n",
+      "display_name": "Adaptive-UI-N",
+      "positive": [
+        {
+          "prompt": "Use $adaptive-ui-n to fix the mobile navigation focus order, then complete the required post-change style audit.",
+          "reason": "Explicit UI implementation with the mandatory completion gate."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to make this React card grid reflow cleanly. Before completion, audit only this task's changed files and directly related styles.",
+          "reason": "Explicit responsive implementation with a bounded mandatory audit."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to remove the wheel-driven full-page snapping while preserving content hierarchy, then verify and report the required style review.",
+          "reason": "Explicit interaction simplification plus mandatory post-change review."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to repair this Tailwind overflow issue without changing sibling pages, then inspect the modified component and directly related utilities before you finish.",
+          "reason": "Explicit narrow UI repair with scope-limited post-change auditing."
+        }
+      ],
+      "negative": [
+        {
+          "prompt": "Use $adaptive-ui-n to give a read-only audit report for this page. Do not edit files.",
+          "reason": "N is for implementation work; a read-only audit belongs to S."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to optimize this PostgreSQL query and add an index.",
+          "reason": "Backend-only database work."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to rewrite this product announcement in a friendlier tone.",
+          "reason": "Copywriting without UI implementation."
+        },
+        {
+          "prompt": "Use $adaptive-ui-n to create a standalone logo asset.",
+          "reason": "Standalone visual asset generation is not responsive UI implementation."
+        },
+        {
+          "prompt": "After changing one checkout button, use $adaptive-ui-n to scan and fix every historical style issue in the repository.",
+          "reason": "The mandatory audit is scoped to task-owned changes and directly related styles, not a whole-repository cleanup."
+        },
+        {
+          "prompt": "Adaptive-UI-N was selected earlier, so automatically use it for this message even though I did not invoke it now.",
+          "reason": "A prior invocation never activates the Skill for a later message."
+        }
+      ]
     }
   ]
 }

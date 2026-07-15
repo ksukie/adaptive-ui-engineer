@@ -1,0 +1,9 @@
+interface:
+  display_name: "Adaptive-UI-S"
+  short_description: "Standard explicit responsive UI work and final on-demand review"
+  icon_small: "./assets/icon-small.svg"
+  icon_large: "./assets/icon-large.svg"
+  brand_color: "#2563EB"
+  default_prompt: "Use $adaptive-ui-s to audit, simplify, or review this responsive web interface."
+policy:
+  allow_implicit_invocation: false

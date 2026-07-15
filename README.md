@@ -4,7 +4,7 @@
 
 # Adaptive UI Engineer
 
-**A portable Agent Skill for auditing, simplifying, implementing, and verifying resilient responsive web interfaces.**
+**Two portable, explicit-only Agent Skills for auditing, implementing, and verifying resilient responsive web interfaces.**
 
 [简体中文](README.zh-CN.md) · [Agent Skills specification](https://agentskills.io/specification) · [Apache-2.0](LICENSE) · [Disclaimer](DISCLAIMER.md)
 
@@ -16,7 +16,7 @@ Adaptive UI Engineer turns responsive UI work into an evidence-based workflow. I
 
 <p align="center"><sub>Audit the evidence, repair the root cause, and verify resilient reflow.</sub></p>
 
-The repository contains one framework-agnostic Agent Skill and a thin Codex plugin wrapper. The Skill remains the single source of workflow truth.
+The repository contains two framework-agnostic companion Agent Skills and a thin Codex plugin wrapper. The Skills remain the single source of workflow truth: `Adaptive-UI-S` is the standard workflow, while `Adaptive-UI-N` adds a required, scoped post-change style audit.
 
 ## Why this exists
 
@@ -33,7 +33,9 @@ This Skill replaces those shortcuts with root-cause diagnosis, constrained imple
 
 ## Capabilities
 
-- Audit-only, implementation, and verification modes derived from the user's authorization.
+- `Adaptive-UI-S`: standard audit-only, implementation, and verification work, plus a user-requested final audit after intermittent work.
+- `Adaptive-UI-N`: UI implementation followed by a mandatory audit of this task's changed files and directly related styles.
+- Explicit-only activation: an installed Skill, a matching request, or a previous invocation never enables either Skill for a later message.
 - Responsive layout review for containers, grid, flex, intrinsic sizing, overflow, zoom, media, tables, and viewport behavior.
 - Optional visual-hierarchy guidance when component radius consistency is in scope; existing design tokens win.
 - Keyboard, focus, navigation, target-size, motion, forced-color, and text-spacing checks.
@@ -49,45 +51,55 @@ This Skill replaces those shortcuts with root-cause diagnosis, constrained imple
 plugins/adaptive-ui-engineer/
 ├── .codex-plugin/plugin.json
 ├── assets/
-└── skills/adaptive-ui-engineer/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    ├── scripts/audit_ui.py
-    ├── references/
-    └── assets/
+└── skills/
+    ├── adaptive-ui-s/
+    │   ├── SKILL.md
+    │   ├── agents/openai.yaml
+    │   ├── scripts/audit_ui.py
+    │   ├── references/
+    │   └── assets/
+    └── adaptive-ui-n/
+        ├── SKILL.md
+        └── agents/openai.yaml
 tests/
 ```
 
-Human-facing project documentation stays at the repository root. The Skill directory contains only instructions and resources needed by an agent.
+Human-facing project documentation stays at the repository root. `Adaptive-UI-N` deliberately reuses the auditor and references from its sibling `adaptive-ui-s` directory, so the two directories are one installable bundle.
 
 ## Installation
 
 ### Any Agent Skills-compatible client
 
-Install or copy this directory using the client's supported Skill mechanism:
+Install or copy both directories using the client's supported Skill mechanism, preserving them as siblings:
 
 ```text
-plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer
+plugins/adaptive-ui-engineer/skills/adaptive-ui-s
+plugins/adaptive-ui-engineer/skills/adaptive-ui-n
 ```
 
-For clients that scan `$HOME/.agents/skills`, copy it there.
+For clients that scan `$HOME/.agents/skills`, copy both directories there. Do not install `adaptive-ui-n` by itself.
 
 PowerShell:
 
 ```powershell
 Copy-Item -Recurse -Force `
-  .\plugins\adaptive-ui-engineer\skills\adaptive-ui-engineer `
-  "$HOME\.agents\skills\adaptive-ui-engineer"
+  .\plugins\adaptive-ui-engineer\skills\adaptive-ui-s `
+  "$HOME\.agents\skills\adaptive-ui-s"
+Copy-Item -Recurse -Force `
+  .\plugins\adaptive-ui-engineer\skills\adaptive-ui-n `
+  "$HOME\.agents\skills\adaptive-ui-n"
 ```
 
 macOS/Linux:
 
 ```sh
-cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer \
-  "$HOME/.agents/skills/adaptive-ui-engineer"
+cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-s \
+  "$HOME/.agents/skills/adaptive-ui-s"
+cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-n \
+  "$HOME/.agents/skills/adaptive-ui-n"
 ```
 
-Client discovery and invocation details vary. A client may discover a Skill from `SKILL.md`, but copy the entire `adaptive-ui-engineer` directory for the bundled auditor, references, and assets. `agents/openai.yaml` is an optional Codex presentation extension.
+Client discovery and invocation details vary. A client may discover a Skill from `SKILL.md`; in a manual installation, keep the `adaptive-ui-s` and `adaptive-ui-n` directories together so N can find the bundled auditor, references, and assets in S. `agents/openai.yaml` is an optional Codex presentation extension.
 
 ### Codex plugin after the repository is published
 
@@ -107,7 +119,7 @@ Choose the matching update path. A ZIP download or manually copied Skill does no
 | Previous installation | Update |
 | --- | --- |
 | Git clone | From the repository directory, run `git pull --ff-only origin main`. Preserve or commit local changes first if Git reports that the worktree is not clean. |
-| ZIP download or manual copy | Download or copy the current version, then replace the entire `plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer` directory. Do not replace only `SKILL.md`. |
+| ZIP download or manual copy | Download or copy the current version, then replace both sibling directories: `plugins/adaptive-ui-engineer/skills/adaptive-ui-s` and `plugins/adaptive-ui-engineer/skills/adaptive-ui-n`. Do not replace only `SKILL.md`. |
 | Codex plugin marketplace | Refresh the marketplace, remove the cached plugin, reinstall it, then start a new Codex task. |
 
 For a Codex plugin installed from this marketplace:
@@ -120,23 +132,39 @@ codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
 
 If the marketplace has not been configured yet, run `codex plugin marketplace add ksukie/adaptive-ui-engineer` before installing the plugin.
 
-## Use the Skill
+### v1.0.0 migration
 
-Invoke it explicitly:
+v1.0.0 replaces the former single `$adaptive-ui-engineer` invocation with two explicit choices. For a manual upgrade from v0.2.1, replace the old `adaptive-ui-engineer` directory rather than leaving it alongside the two new directories; otherwise an outdated third Skill can remain discoverable.
+
+| Former invocation | v1.0.0 replacement |
+| --- | --- |
+| `$adaptive-ui-engineer` for normal audit, refactor, or a final manual review | `$adaptive-ui-s` |
+| `$adaptive-ui-engineer` for UI implementation that must always finish with a scoped style audit | `$adaptive-ui-n` |
+
+## Explicit invocation and modes
+
+In Codex, select `@Adaptive-UI-S` or `@Adaptive-UI-N`. In text-based clients, invoke `$adaptive-ui-s` or `$adaptive-ui-n` in the current message.
+
+| Skill | Use it for | Completion behavior |
+| --- | --- | --- |
+| `Adaptive-UI-S` | Standard responsive UI audits, implementation, refactoring, and a final audit explicitly requested after intermittent work. | Never adds a final audit automatically. A later, explicit S request can audit the named task scope read-only. |
+| `Adaptive-UI-N` | A UI implementation, repair, or refactor that must include a final review. | Before reporting completion, audits this task's changed UI files and directly related styles. It does not scan or repair unrelated historical work. |
+
+Activation is per current message only. Installing either Skill, mentioning a matching UI problem, or having invoked it earlier in the same conversation does not activate it now. If the current message names neither Skill, neither workflow is used. If it names both, N takes precedence.
+
+Examples:
 
 ```text
-Use $adaptive-ui-engineer to audit this page for responsive and accessibility issues. Do not edit files.
+Use $adaptive-ui-s to audit this page for responsive and accessibility issues. Do not edit files.
 ```
 
 ```text
-Use $adaptive-ui-engineer to simplify this index page without changing the framework or sibling pages, then verify the result.
+Use $adaptive-ui-s to review the completed checkout task's changed files and directly related styles. Do not edit files.
 ```
 
 ```text
-Use $adaptive-ui-engineer to normalize the card radius hierarchy and remove viewport-driven layout JavaScript.
+Use $adaptive-ui-n to normalize the card radius hierarchy and remove viewport-driven layout JavaScript, then complete the required post-change style audit.
 ```
-
-The description also supports implicit activation for responsive layout, overflow, viewport, radius, navigation, accessibility interaction, UI complexity, and browser compatibility tasks.
 
 ## Static auditor
 
@@ -145,7 +173,7 @@ The auditor is read-only unless `--output` is explicitly supplied.
 On Windows, use `py -3` in place of `python` when the `python` command is not registered.
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py <target>
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py <target>
   [--format text|json]
   [--config <file>]
   [--fail-on P0|P1|P2|P3|none]
@@ -157,9 +185,9 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui
 Examples:
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py ./src --format text --fail-on none
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py ./src --format json --fail-on P1
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py ./src --format json --redact-evidence --output audit.json
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format text --fail-on none
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format json --fail-on P1
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format json --redact-evidence --output audit.json
 ```
 
 Exit codes:
@@ -170,7 +198,7 @@ Exit codes:
 | 1 | Scan completed and a finding met the selected threshold |
 | 2 | Invalid input, configuration, or output operation |
 
-JSON output uses `schema_version: 2`. Each finding includes `rule_id`, `priority`, `confidence`, `evidence_level`, `validation_state`, `category`, `path`, `line`, `message`, `evidence`, and `recommendation`. `confidence` describes rule certainty, `evidence_level` identifies the evidence origin, and `validation_state` records whether additional validation applies and its outcome. The normative contract is [audit-report.schema.json](plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/assets/audit-report.schema.json). Report metadata uses paths relative to the audit root by default; `--absolute-paths` is an explicit opt-in. Evidence can contain short source excerpts, so use `--redact-evidence` before sharing a report when source disclosure is not authorized.
+JSON output uses `schema_version: 2`. Each finding includes `rule_id`, `priority`, `confidence`, `evidence_level`, `validation_state`, `category`, `path`, `line`, `message`, `evidence`, and `recommendation`. `confidence` describes rule certainty, `evidence_level` identifies the evidence origin, and `validation_state` records whether additional validation applies and its outcome. The normative contract is [audit-report.schema.json](plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-report.schema.json). Report metadata uses paths relative to the audit root by default; `--absolute-paths` is an explicit opt-in. Evidence can contain short source excerpts, so use `--redact-evidence` before sharing a report when source disclosure is not authorized.
 
 Document-level semantic checks apply to `.html` and `.htm`. Framework component files receive source triage for CSS, scripts, and known utility patterns; rendered semantic behavior still needs runtime verification.
 
@@ -192,7 +220,7 @@ Place `.adaptive-ui-engineer.json` at the audited root or pass `--config`:
 }
 ```
 
-The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/assets/audit-config.schema.json`. Suppressions require a narrow path and a reason; they are counted in output.
+The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-config.schema.json`. Suppressions require a narrow path and a reason; they are counted in output.
 
 ## Design principles
 
@@ -217,7 +245,7 @@ The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-engine
 | IE11 and Safari below 16.4 | Unsupported; core semantic degradation is still preferred |
 | Python auditor | Python 3.9+ on Windows, macOS, and Linux |
 
-### Evidence status for 0.2.1
+### Evidence status for 1.0.0
 
 - Locally validated on Windows with Python 3.9, 3.10, and 3.11.
 - Unit tests and package checks cover cross-platform path behavior. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.

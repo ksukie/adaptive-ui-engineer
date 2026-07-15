@@ -28,13 +28,15 @@ On Windows where `python` is not registered, substitute `py -3` in the commands 
 
 ```text
 python -m unittest discover -s tests -v
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/scripts/audit_ui.py tests/fixtures/good --format json --redact-evidence --fail-on P1
+python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tests/fixtures/good --format json --redact-evidence --fail-on P1
 ```
 
 - [ ] Run the suite with Python 3.9, 3.10, and 3.11 locally; let hosted CI cover the documented wider matrix.
 - [ ] Run the current Codex Skill Creator structural validator.
 - [ ] Run the current Codex Plugin Creator manifest validator.
 - [ ] Run the hash-locked open Agent Skills reference validator.
+- [ ] Confirm Codex surfaces `Adaptive-UI-S` and `Adaptive-UI-N`, and that each is inactive unless explicitly selected in the current message.
+- [ ] Smoke-test S's read-only final review and N's required, scoped post-change style audit without expanding either into a whole-repository review.
 - [ ] Confirm that no validation step created caches, reports, temporary packages, or user-project changes in the release tree.
 - [ ] Perform one read-only smoke audit of a real interface and record any browser environments that were not tested.
 

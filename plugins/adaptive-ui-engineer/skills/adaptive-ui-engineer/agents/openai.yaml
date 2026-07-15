@@ -1,9 +1,0 @@
-interface:
-  display_name: "Adaptive UI Engineer"
-  short_description: "Audit and improve resilient responsive web interfaces"
-  icon_small: "./assets/icon-small.svg"
-  icon_large: "./assets/icon-large.svg"
-  brand_color: "#2563EB"
-  default_prompt: "Use $adaptive-ui-engineer to audit, simplify, and verify this web interface."
-policy:
-  allow_implicit_invocation: true

@@ -9,7 +9,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "adaptive-ui-engineer"
-SKILL = PLUGIN / "skills" / "adaptive-ui-engineer"
+S_SKILL = PLUGIN / "skills" / "adaptive-ui-s"
+N_SKILL = PLUGIN / "skills" / "adaptive-ui-n"
+SKILL = S_SKILL
+SKILLS = {
+    "adaptive-ui-s": S_SKILL,
+    "adaptive-ui-n": N_SKILL,
+}
 
 
 class PackageContractTests(unittest.TestCase):
@@ -31,9 +37,11 @@ class PackageContractTests(unittest.TestCase):
             ROOT / ".github" / "scripts" / "run_skills_ref.py",
             ROOT / ".agents" / "plugins" / "marketplace.json",
             PLUGIN / ".codex-plugin" / "plugin.json",
-            SKILL / "SKILL.md",
-            SKILL / "agents" / "openai.yaml",
-            SKILL / "assets" / "audit-report.schema.json",
+            S_SKILL / "SKILL.md",
+            S_SKILL / "agents" / "openai.yaml",
+            S_SKILL / "assets" / "audit-report.schema.json",
+            N_SKILL / "SKILL.md",
+            N_SKILL / "agents" / "openai.yaml",
         ]
         self.assertEqual([str(path) for path in paths if not path.is_file()], [])
 
@@ -70,14 +78,16 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(source.resolve(), PLUGIN.resolve())
 
     def test_skill_frontmatter_is_minimal_and_name_matches(self) -> None:
-        content = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-        self.assertLessEqual(len(content.splitlines()), 500)
-        self.assertNotIn("TODO", content)
-        match = re.match(r"^---\n(.*?)\n---\n", content, flags=re.DOTALL)
-        self.assertIsNotNone(match)
-        keys = [line.split(":", 1)[0] for line in match.group(1).splitlines() if ":" in line]
-        self.assertEqual(keys, ["name", "description"])
-        self.assertIn("name: adaptive-ui-engineer", match.group(1))
+        for name, skill in SKILLS.items():
+            with self.subTest(skill=name):
+                content = (skill / "SKILL.md").read_text(encoding="utf-8")
+                self.assertLessEqual(len(content.splitlines()), 500)
+                self.assertNotIn("TODO", content)
+                match = re.match(r"^---\n(.*?)\n---\n", content, flags=re.DOTALL)
+                self.assertIsNotNone(match)
+                keys = [line.split(":", 1)[0] for line in match.group(1).splitlines() if ":" in line]
+                self.assertEqual(keys, ["name", "description"])
+                self.assertIn("name: {0}".format(name), match.group(1))
 
     def test_skill_resource_links_resolve(self) -> None:
         content = (SKILL / "SKILL.md").read_text(encoding="utf-8")
@@ -97,13 +107,34 @@ class PackageContractTests(unittest.TestCase):
             self.assertNotIn("python scripts/audit_ui.py", content)
 
     def test_openai_metadata_references_real_assets_and_skill(self) -> None:
-        content = (SKILL / "agents" / "openai.yaml").read_text(encoding="utf-8")
-        self.assertIn('display_name: "Adaptive UI Engineer"', content)
-        self.assertIn("$adaptive-ui-engineer", content)
-        self.assertIn("allow_implicit_invocation: true", content)
+        metadata = {
+            "adaptive-ui-s": (S_SKILL, "Adaptive-UI-S", "$adaptive-ui-s"),
+            "adaptive-ui-n": (N_SKILL, "Adaptive-UI-N", "$adaptive-ui-n"),
+        }
+        for name, (skill, display_name, invocation) in metadata.items():
+            with self.subTest(skill=name):
+                content = (skill / "agents" / "openai.yaml").read_text(encoding="utf-8")
+                self.assertIn('display_name: "{0}"'.format(display_name), content)
+                self.assertIn(invocation, content)
+                self.assertIn("allow_implicit_invocation: false", content)
+                self.assertNotIn("allow_implicit_invocation: true", content)
+
+        content = (S_SKILL / "agents" / "openai.yaml").read_text(encoding="utf-8")
         for relative in ("assets/icon-small.svg", "assets/icon-large.svg"):
             self.assertIn(relative, content)
-            self.assertTrue((SKILL / relative).is_file())
+            self.assertTrue((S_SKILL / relative).is_file())
+
+    def test_skill_mode_boundaries_are_documented(self) -> None:
+        standard = (S_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        enhanced = (N_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        for content in (standard, enhanced):
+            self.assertIn("Do not activate from a matching task description", content)
+            self.assertIn("If the current message names neither Adaptive-UI-S nor Adaptive-UI-N", content)
+        self.assertIn("Adaptive-UI-S never adds a completion audit automatically", standard)
+        self.assertIn("User-requested final review after intermittent work", standard)
+        self.assertIn("This review is required before claiming the task is complete", enhanced)
+        self.assertIn("Do not turn this into a whole-repository audit", enhanced)
+        self.assertIn("Treat pre-existing modified or untracked paths as baseline exclusions", enhanced)
 
     def test_rule_catalog_matches_implemented_rule_ids(self) -> None:
         script = (SKILL / "scripts" / "audit_ui.py").read_text(encoding="utf-8")
@@ -145,7 +176,7 @@ class PackageContractTests(unittest.TestCase):
         match = re.search(r'^TOOL_VERSION = "([^"]+)"$', script, flags=re.MULTILINE)
         self.assertIsNotNone(match)
         self.assertEqual(match.group(1), manifest["version"])
-        self.assertEqual(manifest["version"], "0.2.1")
+        self.assertEqual(manifest["version"], "1.0.0")
 
     def test_runtime_auditor_uses_only_standard_library_modules(self) -> None:
         script_path = SKILL / "scripts" / "audit_ui.py"
@@ -195,8 +226,8 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v0.2.1/"
-            "plugins/adaptive-ui-engineer/skills/adaptive-ui-engineer/assets/"
+            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.0/"
+            "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
             "audit-config.schema.json",
         )
         self.assertEqual(report_schema["properties"]["schema_version"]["const"], 2)
@@ -217,25 +248,39 @@ class PackageContractTests(unittest.TestCase):
             },
         )
         evals = json.loads((ROOT / "tests" / "evals" / "trigger-cases.json").read_text(encoding="utf-8"))
-        self.assertEqual(evals["schema_version"], 1)
-        self.assertGreaterEqual(len(evals["positive"]), 6)
-        self.assertGreaterEqual(len(evals["negative"]), 6)
-        for group in ("positive", "negative"):
-            for case in evals[group]:
-                self.assertEqual(set(case), {"prompt", "reason"})
-                self.assertTrue(case["prompt"].strip())
-                self.assertTrue(case["reason"].strip())
-        self.assertTrue(any("cosmetic" in case["reason"] for case in evals["negative"]))
+        self.assertEqual(evals["schema_version"], 2)
+        self.assertEqual(set(evals), {"schema_version", "skills"})
+        self.assertEqual(
+            {skill["name"] for skill in evals["skills"]},
+            {"adaptive-ui-s", "adaptive-ui-n"},
+        )
+        for skill in evals["skills"]:
+            self.assertEqual(set(skill), {"name", "display_name", "positive", "negative"})
+            self.assertGreaterEqual(len(skill["positive"]), 4)
+            self.assertGreaterEqual(len(skill["negative"]), 5)
+            for group in ("positive", "negative"):
+                for case in skill[group]:
+                    self.assertEqual(set(case), {"prompt", "reason"})
+                    self.assertTrue(case["prompt"].strip())
+                    self.assertTrue(case["reason"].strip())
+        standard = next(skill for skill in evals["skills"] if skill["name"] == "adaptive-ui-s")
+        enhanced = next(skill for skill in evals["skills"] if skill["name"] == "adaptive-ui-n")
+        self.assertEqual(standard["display_name"], "Adaptive-UI-S")
+        self.assertEqual(enhanced["display_name"], "Adaptive-UI-N")
+        self.assertTrue(any("cosmetic" in case["reason"] for case in standard["negative"]))
+        self.assertTrue(any("mandatory" in case["reason"] for case in enhanced["positive"]))
 
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
         chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 0.2.1", english)
-        self.assertIn("### 0.2.1 证据状态", chinese)
+        self.assertIn("### Evidence status for 1.0.0", english)
+        self.assertIn("### 1.0.0 证据状态", chinese)
         self.assertNotIn("future CI", english)
         self.assertNotIn("未来 CI", chinese)
-        self.assertIn("copy the entire `adaptive-ui-engineer` directory", english)
-        self.assertIn("必须复制整个 `adaptive-ui-engineer` 目录", chinese)
+        self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)
+        self.assertIn("`adaptive-ui-s` 与 `adaptive-ui-n` 保持在同级", chinese)
+        self.assertIn("Activation is per current message only", english)
+        self.assertIn("启用仅对当前消息有效", chinese)
 
     def test_no_scaffold_placeholders_remain(self) -> None:
         offenders = []
