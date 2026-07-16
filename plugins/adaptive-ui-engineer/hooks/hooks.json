@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v python3 >/dev/null 2>&1; then python3 \"$PLUGIN_ROOT/skills/adaptive-ui-s/scripts/check_update.py\" --hook; elif command -v python >/dev/null 2>&1; then python \"$PLUGIN_ROOT/skills/adaptive-ui-s/scripts/check_update.py\" --hook; fi",
+            "commandWindows": "$py = Get-Command py -ErrorAction SilentlyContinue; if ($py) { & py -3 \"$env:PLUGIN_ROOT\\skills\\adaptive-ui-s\\scripts\\check_update.py\" --hook } elseif (Get-Command python -ErrorAction SilentlyContinue) { & python \"$env:PLUGIN_ROOT\\skills\\adaptive-ui-s\\scripts\\check_update.py\" --hook }",
+            "timeout": 6
+          }
+        ]
+      }
+    ]
+  }
+}

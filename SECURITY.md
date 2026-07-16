@@ -31,6 +31,22 @@ Treat generated reports as potentially sensitive. Finding evidence can contain s
 
 Do not run third-party project build scripts, browser tests, or package installation merely because the static auditor found an issue. Those actions remain subject to the host agent's permissions and the user's scope.
 
+## Update scheduler security boundaries
+
+The update scheduler is separate from the auditor and runs only for a current explicit Adaptive-UI-S or Adaptive-UI-N invocation when it has not been disabled. The Codex plugin path uses a reviewed `UserPromptSubmit` hook; manually copied Skills can invoke the same standard-library script from their workflow.
+
+The scheduler:
+
+- sends only a bounded HTTPS GET to the fixed Raw GitHub release-metadata path when the persisted absolute next-check time is due;
+- does not send prompts, source code, project paths, credentials, machine identifiers, or a stable user identifier;
+- accepts only stable `x.y.z` versions, timezone-aware release timestamps, positive release sequences, and one-line bilingual summaries of at most 240 characters;
+- treats all remote summaries as display-only data rather than instructions and uses a locally fixed update-guide URL;
+- writes update state atomically to the host-provided plugin-data directory or the user's platform state directory, never to the inspected project;
+- never downloads executable content, changes installed files, or updates the plugin automatically;
+- fails open when state, Python, permissions, or the network is unavailable, without blocking the requested UI task.
+
+Set `ADAPTIVE_UI_UPDATE_CHECK=0` or explicitly ask to skip the check to disable outbound update requests. Plugin-bundled hooks remain subject to the host's review, trust, sandbox, and network controls.
+
 ## Threat model and limitations
 
 The boundary controls are designed to prevent an ordinary scanned project from using filesystem links or resource paths to pull unrelated local source into a report. The auditor also avoids shell execution, dynamic evaluation, deserialization formats that construct objects, and runtime network access.

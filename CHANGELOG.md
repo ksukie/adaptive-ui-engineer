@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-16
+
+### Added
+
+- Added a standard-library update scheduler shared by Adaptive-UI-S and Adaptive-UI-N. It checks no earlier than the stored absolute next-check time, uses 72-hour no-update intervals, starts update reminders at 36 hours, and shortens later confirmed-reminder intervals by 20% to a 12-hour floor.
+- Added compact bilingual release metadata with a stable release sequence so completion notices can report the installed and latest versions, subsequent stable-release count, latest summary, and next scheduled check.
+- Added a plugin-bundled `UserPromptSubmit` hook and a portable manual-Skill fallback. Update checks fail open, never update files automatically, and can be disabled with `ADAPTIVE_UI_UPDATE_CHECK=0`.
+
 ## [1.0.3] - 2026-07-15
 
 ### Added
@@ -80,7 +88,8 @@ All notable changes to this project will be documented in this file. The format 
 - Made report metadata root-relative by default, added opt-in evidence redaction and absolute paths, sanitized skipped-file errors, and made explicit output atomic with linked-destination and linked-parent refusal.
 - Pinned GitHub Actions to immutable commits, authenticated the fixed Agent Skills validator source archive by SHA-256, and locked every CI-only Python dependency by version and hash.
 
-[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.0...v1.0.1

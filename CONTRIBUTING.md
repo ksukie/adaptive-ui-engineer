@@ -19,6 +19,8 @@ python -m unittest discover -s tests -v
 
 The reference Agent Skills validator and JSON Schema report validator are CI-only. The Agent Skills source commit and archive digest are fixed in `.github/scripts/run_skills_ref.py`, and all CI-only dependencies are version- and hash-locked in `.github/requirements/skills-ref.txt`; do not add these packages to the runtime auditor. When updating the Agent Skills validator, review the upstream diff and update the commit, archive digest, expected source manifest, tests, and changelog together. Never replace the pin with a branch or mutable tag.
 
+For every stable package release, update `adaptive-ui-s/release.json` together with the plugin and auditor versions. Increment `release_sequence` exactly once, use a UTC `released_at` value, keep both summaries to one display-only line, and run the update-scheduler tests before publishing the Raw metadata from the default branch.
+
 Run the auditor manually against a fixture:
 
 ```text
@@ -73,6 +75,7 @@ By submitting a contribution, you agree that it is licensed under the repository
 - The standard-library auditor remains read-only by default.
 - Text and JSON outputs remain deterministic and backward compatible, or the schema version changes.
 - Unit tests and package validation pass.
+- Release metadata, plugin version, auditor version, scheduler user agent, schema URLs, documentation, and changelog agree.
 - No generated caches, reports, browser binaries, credentials, or user project files are included.
 - No workflow uses a mutable action tag, and new CI packages are fixed with cryptographic hashes.
 - Compatibility and accessibility claims match actual evidence.

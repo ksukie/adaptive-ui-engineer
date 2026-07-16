@@ -12,6 +12,9 @@ PLUGIN = ROOT / "plugins" / "adaptive-ui-engineer"
 S_SKILL = PLUGIN / "skills" / "adaptive-ui-s"
 N_SKILL = PLUGIN / "skills" / "adaptive-ui-n"
 MODE_SELECTION_GUIDE = S_SKILL / "references" / "mode-selection.md"
+RELEASE_METADATA = S_SKILL / "release.json"
+UPDATE_CHECKER = S_SKILL / "scripts" / "check_update.py"
+PLUGIN_HOOKS = PLUGIN / "hooks" / "hooks.json"
 SKILL = S_SKILL
 SKILLS = {
     "adaptive-ui-s": S_SKILL,
@@ -44,6 +47,9 @@ class PackageContractTests(unittest.TestCase):
             N_SKILL / "SKILL.md",
             N_SKILL / "agents" / "openai.yaml",
             MODE_SELECTION_GUIDE,
+            RELEASE_METADATA,
+            UPDATE_CHECKER,
+            PLUGIN_HOOKS,
         ]
         self.assertEqual([str(path) for path in paths if not path.is_file()], [])
 
@@ -163,6 +169,8 @@ class PackageContractTests(unittest.TestCase):
         self.assertTrue((companion / "scripts" / "audit_ui.py").is_file())
         self.assertTrue((companion / "references" / "verification-protocol.md").is_file())
         self.assertTrue((companion / "references" / "mode-selection.md").is_file())
+        self.assertTrue((companion / "scripts" / "check_update.py").is_file())
+        self.assertTrue((companion / "release.json").is_file())
 
     def test_shared_mode_selection_guide_preserves_the_two_skill_boundary(self) -> None:
         guide = MODE_SELECTION_GUIDE.read_text(encoding="utf-8")
@@ -218,10 +226,60 @@ class PackageContractTests(unittest.TestCase):
     def test_tool_and_plugin_versions_match(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
         script = (SKILL / "scripts" / "audit_ui.py").read_text(encoding="utf-8")
+        checker = UPDATE_CHECKER.read_text(encoding="utf-8")
+        release = json.loads(RELEASE_METADATA.read_text(encoding="utf-8"))
         match = re.search(r'^TOOL_VERSION = "([^"]+)"$', script, flags=re.MULTILINE)
         self.assertIsNotNone(match)
         self.assertEqual(match.group(1), manifest["version"])
-        self.assertEqual(manifest["version"], "1.0.3")
+        self.assertEqual(release["version"], manifest["version"])
+        self.assertIn(
+            '"User-Agent": "adaptive-ui-engineer-update-check/{0}"'.format(
+                manifest["version"]
+            ),
+            checker,
+        )
+        self.assertEqual(manifest["version"], "1.1.0")
+
+    def test_update_release_metadata_contract(self) -> None:
+        release = json.loads(RELEASE_METADATA.read_text(encoding="utf-8"))
+        self.assertEqual(
+            set(release), {"version", "released_at", "release_sequence", "summary"}
+        )
+        self.assertRegex(release["version"], r"^\d+\.\d+\.\d+$")
+        self.assertRegex(release["released_at"], r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+        self.assertEqual(release["release_sequence"], 8)
+        self.assertEqual(set(release["summary"]), {"zh-CN", "en"})
+        for summary in release["summary"].values():
+            self.assertTrue(summary.strip())
+            self.assertLessEqual(len(summary), 240)
+            self.assertNotRegex(summary, r"[\r\n]")
+
+    def test_plugin_hook_runs_only_the_shared_update_checker(self) -> None:
+        hooks = json.loads(PLUGIN_HOOKS.read_text(encoding="utf-8"))
+        self.assertEqual(set(hooks), {"hooks"})
+        self.assertEqual(set(hooks["hooks"]), {"UserPromptSubmit"})
+        entry = hooks["hooks"]["UserPromptSubmit"][0]
+        self.assertNotIn("matcher", entry)
+        handler = entry["hooks"][0]
+        self.assertEqual(handler["type"], "command")
+        self.assertIn("$PLUGIN_ROOT/skills/adaptive-ui-s/scripts/check_update.py", handler["command"])
+        self.assertIn("$env:PLUGIN_ROOT", handler["commandWindows"])
+        self.assertIn("--hook", handler["command"])
+        self.assertIn("--hook", handler["commandWindows"])
+        self.assertLessEqual(handler["timeout"], 6)
+
+    def test_skills_document_the_shared_update_notice_protocol(self) -> None:
+        standard = (S_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        enhanced = (N_SKILL / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("## Update-notice protocol", standard)
+        self.assertIn("<skill-root>/scripts/check_update.py", standard)
+        self.assertIn("## Update-notice protocol", enhanced)
+        self.assertIn("<s-skill-root>/scripts/check_update.py", enhanced)
+        for content in (standard, enhanced):
+            self.assertIn("36 hours", content)
+            self.assertIn("20%", content)
+            self.assertIn("12-hour floor", content)
+            self.assertIn("no automatic update occurred", content)
 
     def test_runtime_auditor_uses_only_standard_library_modules(self) -> None:
         script_path = SKILL / "scripts" / "audit_ui.py"
@@ -261,6 +319,46 @@ class PackageContractTests(unittest.TestCase):
         ):
             self.assertNotIn(dangerous, source)
 
+    def test_update_scheduler_uses_only_approved_standard_library_modules(self) -> None:
+        source = UPDATE_CHECKER.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        roots = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                roots.update(alias.name.split(".", 1)[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                roots.add(node.module.split(".", 1)[0])
+        allowed = {
+            "__future__",
+            "argparse",
+            "datetime",
+            "json",
+            "os",
+            "pathlib",
+            "re",
+            "sys",
+            "tempfile",
+            "typing",
+            "urllib",
+        }
+        self.assertEqual(sorted(roots - allowed), [])
+        for dangerous in (
+            "eval(",
+            "exec(",
+            "os.system(",
+            "shell=True",
+            "subprocess.",
+            "socket.",
+            "pickle.",
+            "yaml.",
+            "requests.",
+        ):
+            self.assertNotIn(dangerous, source)
+        self.assertIn(
+            '"https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/main/"',
+            source,
+        )
+
     def test_json_assets_are_valid(self) -> None:
         config_schema = json.loads(
             (SKILL / "assets" / "audit-config.schema.json").read_text(encoding="utf-8")
@@ -271,7 +369,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.0.3/"
+            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.1.0/"
             "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
             "audit-config.schema.json",
         )
@@ -318,8 +416,8 @@ class PackageContractTests(unittest.TestCase):
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
         english = (ROOT / "README.md").read_text(encoding="utf-8")
         chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 1.0.3", english)
-        self.assertIn("### 1.0.3 证据状态", chinese)
+        self.assertIn("### Evidence status for 1.1.0", english)
+        self.assertIn("### 1.1.0 证据状态", chinese)
         self.assertIn("mode-selection guide", english)
         self.assertIn("模式选择说明", chinese)
         self.assertNotIn("future CI", english)
@@ -330,6 +428,10 @@ class PackageContractTests(unittest.TestCase):
         self.assertIn("plugin parent; it is a container", english)
         self.assertIn("两个 Skill 都声明为仅显式调用", chinese)
         self.assertIn("插件父级；它只是容器", chinese)
+        self.assertIn("### Optional update notices", english)
+        self.assertIn("### 可选更新提醒", chinese)
+        self.assertIn("ADAPTIVE_UI_UPDATE_CHECK=0", english)
+        self.assertIn("ADAPTIVE_UI_UPDATE_CHECK=0", chinese)
 
     def test_no_scaffold_placeholders_remain(self) -> None:
         offenders = []
@@ -399,6 +501,8 @@ class PackageContractTests(unittest.TestCase):
             "private security advisory",
             "--redact-evidence",
             "symbolic links and Windows reparse points",
+            "Update scheduler security boundaries",
+            "display-only data",
             "not a formal penetration test",
         ):
             self.assertIn(phrase, security)
@@ -406,6 +510,8 @@ class PackageContractTests(unittest.TestCase):
             "Secret scanning",
             "private vulnerability reporting",
             "full commit SHAs",
+            "release_sequence",
+            "20%",
             "independent audit, or certification",
         ):
             self.assertIn(phrase.lower(), checklist.lower())

@@ -6,6 +6,8 @@ Use this checklist for each public release. It separates repository readiness fr
 
 - [ ] Confirm that `ksukie` is the intended public author and repository owner everywhere it appears.
 - [ ] Confirm that the year, release version, project URLs, installation names, and marketplace names are correct.
+- [ ] Confirm that `adaptive-ui-s/release.json`, the plugin manifest, auditor version, scheduler user agent, schema URLs, evidence-status headings, and changelog all name the same stable release.
+- [ ] Increment `release_sequence` exactly once, record `released_at` in UTC, and keep the English and Chinese summaries accurate, single-line, display-only, and within 240 characters.
 - [ ] Confirm that every source file and project-owned asset can be released under Apache-2.0.
 - [ ] Preserve required third-party notices if any third-party material is added. Do not create a `NOTICE` file unless there is content that actually requires it.
 - [ ] Read the English and Chinese READMEs side by side and verify that their behavior and compatibility claims agree.
@@ -39,6 +41,9 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tes
 - [ ] In a fresh Codex chat, invoke each Skill once, then send a matching UI request without `@` or `$`; verify that no implicit Skill invocation occurs on that later message.
 - [ ] Smoke-test S's read-only final review and N's required, scoped post-change style audit without expanding either into a whole-repository review.
 - [ ] Smoke-test N against a task that edits a file with pre-existing changes; verify that the report separates baseline and task-owned hunks.
+- [ ] Smoke-test the update scheduler before and after its absolute `next_check_at`: no-update checks schedule 72 hours, the first update reminder schedules 36 hours, later confirmed reminders decay by 20% to a 12-hour floor, and failures retry after 12 hours without a reminder or decay.
+- [ ] Review and trust the bundled hook in a fresh Codex installation, then verify that explicit S and N invocations do not run the manual checker a second time and that non-invoked prompts perform no update check.
+- [ ] Confirm that update notices contain only validated display data, appear after normal task completion, never update files automatically, and remain silent when no update is available or the check fails.
 - [ ] Confirm that no validation step created caches, reports, temporary packages, or user-project changes in the release tree.
 - [ ] Perform one read-only smoke audit of a real interface and record any browser environments that were not tested.
 

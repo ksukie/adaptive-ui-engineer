@@ -42,6 +42,7 @@ This Skill replaces those shortcuts with root-cause diagnosis, constrained imple
 - JavaScript simplification: remove viewport-driven sizing, scroll interception, duplicate rendering, autoplay, stale listeners, and unnecessary state.
 - Adapters for Vanilla HTML/CSS/JS, React/Next, Vue/Nuxt, SvelteKit, Tailwind, scoped CSS, CSS Modules, preprocessors, and CSS-in-JS.
 - A zero-dependency Python auditor with stable rule IDs, confidence labels, suppressions, JSON output, and CI thresholds.
+- A standard-library, fail-open update scheduler with absolute next-check times and detailed post-task reminders; no automatic updates.
 - Optional browser evidence when the host already provides browser control; no mandatory Playwright installation.
 
 ## Package layout
@@ -51,11 +52,15 @@ This Skill replaces those shortcuts with root-cause diagnosis, constrained imple
 plugins/adaptive-ui-engineer/
 ├── .codex-plugin/plugin.json
 ├── assets/
+├── hooks/hooks.json
 └── skills/
     ├── adaptive-ui-s/
     │   ├── SKILL.md
     │   ├── agents/openai.yaml
-    │   ├── scripts/audit_ui.py
+    │   ├── release.json
+    │   ├── scripts/
+    │   │   ├── audit_ui.py
+    │   │   └── check_update.py
     │   ├── references/
     │   └── assets/
     └── adaptive-ui-n/
@@ -64,7 +69,7 @@ plugins/adaptive-ui-engineer/
 tests/
 ```
 
-Human-facing project documentation stays at the repository root. `Adaptive-UI-N` deliberately reuses the auditor and references from its sibling `adaptive-ui-s` directory, so the two directories are one installable bundle.
+Human-facing project documentation stays at the repository root. `Adaptive-UI-N` deliberately reuses the auditor, update scheduler, release metadata, and references from its sibling `adaptive-ui-s` directory, so the two directories are one installable bundle.
 
 ## Installation
 
@@ -110,7 +115,7 @@ codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
 
 For local plugin development, add the absolute repository directory as a non-default marketplace, then install the same plugin name. Start a new task after installation so the updated Skill is discovered.
 
-The Skill adds no MCP server, connector, hook, or service credential. Marketplace installation may still use the host's normal authentication policy.
+The plugin adds no MCP server, connector, or service credential. It bundles a `UserPromptSubmit` hook only to run the rate-limited update scheduler for an explicit S or N invocation. Codex requires users to review and trust plugin hooks before they run; marketplace installation may also follow the host's normal authentication policy.
 
 ## Update
 
@@ -131,6 +136,14 @@ codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
 ```
 
 If the marketplace has not been configured yet, run `codex plugin marketplace add ksukie/adaptive-ui-engineer` before installing the plugin.
+
+### Optional update notices
+
+Each explicit S or N invocation can run a non-blocking update scheduler. The first repository check is eligible 72 hours after the installed release time. After a successful check with no newer version, the next check is scheduled 72 hours later. When a newer stable release is found, the task completes first and then reports the installed and latest versions, release dates, subsequent stable-release count, latest bilingual summary, prior/current/next check times, and update guide. The first follow-up is scheduled after 36 hours; each later successful confirmation while the local version remains behind shortens the prior interval by 20% to a 12-hour floor.
+
+`next_check_at` is an earliest eligible time, not a background timer. If the Skill is not used at that time, the check occurs on the first later explicit invocation and the next schedule is based on that actual check time. A failed request does not count as “no update,” does not shorten the reminder interval, and retries silently after 12 hours.
+
+The Codex plugin stores scheduler state in its writable plugin-data directory. A manually copied Skill uses the user's platform state directory when it is writable. The checker sends only a bounded HTTPS GET to the fixed raw release-metadata URL; it does not send prompts, source code, project paths, credentials, or a stable user identifier. It never updates files automatically and never blocks the requested UI task. Set `ADAPTIVE_UI_UPDATE_CHECK=0` or explicitly ask to skip the check to disable it.
 
 ### v1.0.0 migration
 
@@ -247,12 +260,12 @@ The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/asse
 | Safari and iOS Safari | 16.4 and later |
 | Chrome Android and Android WebView | Modern maintained releases |
 | IE11 and Safari below 16.4 | Unsupported; core semantic degradation is still preferred |
-| Python auditor | Python 3.9+ on Windows, macOS, and Linux |
+| Python auditor and optional update scheduler | Python 3.9+ on Windows, macOS, and Linux |
 
-### Evidence status for 1.0.3
+### Evidence status for 1.1.0
 
 - Locally validated on Windows with Python 3.9, 3.10, and 3.11.
-- Unit tests and package checks cover cross-platform path behavior. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.
+- Unit tests and package checks cover cross-platform path behavior, absolute next-check scheduling, 72-hour no-update intervals, 36-hour update reminders, 20% decay, the 12-hour floor, and failure retries. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.
 - The package does not claim that a generated or audited website passes untested browsers, assistive technologies, or WCAG conformance.
 
 ## Development and validation
@@ -268,6 +281,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [DISCLAIMER.
 ## Security and open-source posture
 
 - The runtime auditor uses only the Python standard library. It does not execute scanned code, access the network, or install packages.
+- The separate standard-library update scheduler accesses only the fixed release-metadata endpoint when a stored check is due, bounds and validates the response, treats summaries as display-only data, writes only scheduler state, and fails open without changing user projects.
 - Symbolic links and Windows reparse points inside the audit tree are skipped; a linked target or configuration is rejected. Local resource checks cannot escape the audit root.
 - Reports are read-only by default. Explicit file output is written atomically and refuses a linked destination or linked parent path.
 - Runtime users have no third-party Python dependencies. CI-only actions use immutable commit pins; the Agent Skills validator source archive and dependency graph are cryptographically locked.

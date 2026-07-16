@@ -1,0 +1,9 @@
+{
+  "version": "1.1.0",
+  "released_at": "2026-07-16T09:31:22Z",
+  "release_sequence": 8,
+  "summary": {
+    "zh-CN": "新增低频版本检查、递减式更新提醒和跨安装方式的安全降级。",
+    "en": "Adds low-frequency version checks, decaying update reminders, and safe cross-installation fallback behavior."
+  }
+}
