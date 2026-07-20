@@ -1,0 +1,9 @@
+{
+  "version": "2.0.0",
+  "released_at": "2026-07-20T08:50:05Z",
+  "release_sequence": 9,
+  "summary": {
+    "zh-CN": "项目更名为 AdaptiveUI-SKILL，并将插件、Skill、调用命令、配置文件与报告 Schema 迁移到 v2 命名；中文 README 现作为仓库首页。",
+    "en": "Renames the project to AdaptiveUI-SKILL and migrates plugin, Skill, invocation, configuration, and report-schema identifiers; the Chinese README is now the repository homepage."
+  }
+}

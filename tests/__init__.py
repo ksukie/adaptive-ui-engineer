@@ -1,1 +1,1 @@
-"""Adaptive UI Engineer test suite."""
+"""AdaptiveUI-SKILL test suite."""

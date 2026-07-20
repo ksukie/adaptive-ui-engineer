@@ -1,14 +1,14 @@
 {
-  "name": "adaptive-ui-engineer",
+  "name": "adaptiveui-skill",
   "interface": {
-    "displayName": "Adaptive UI Engineer"
+    "displayName": "AdaptiveUI-SKILL"
   },
   "plugins": [
     {
-      "name": "adaptive-ui-engineer",
+      "name": "adaptiveui-skill",
       "source": {
         "source": "local",
-        "path": "./plugins/adaptive-ui-engineer"
+        "path": "./plugins/adaptiveui-skill"
       },
       "policy": {
         "installation": "AVAILABLE",

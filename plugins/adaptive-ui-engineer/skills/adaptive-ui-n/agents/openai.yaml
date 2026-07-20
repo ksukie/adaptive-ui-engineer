@@ -1,7 +1,0 @@
-interface:
-  display_name: "Adaptive-UI-N"
-  short_description: "Derived adaptive UI changes with required scoped audit"
-  brand_color: "#2563EB"
-  default_prompt: "Use $adaptive-ui-n on this feature. Implement only its adaptive-UI effects, then run the required scoped style audit."
-policy:
-  allow_implicit_invocation: false

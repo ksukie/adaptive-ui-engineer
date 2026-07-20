@@ -1,9 +1,0 @@
-{
-  "version": "1.1.0",
-  "released_at": "2026-07-16T09:31:22Z",
-  "release_sequence": 8,
-  "summary": {
-    "zh-CN": "新增更新提醒、适配 UI 相关性门控与网页预览 UTF-8 验证；显式调用可从功能描述推导 UI 影响，并隔离纯装饰及非 UI 内容。",
-    "en": "Adds update notices, adaptive UI relevance gating, and browser-preview UTF-8 verification while isolating cosmetic-only and unrelated non-UI details."
-  }
-}

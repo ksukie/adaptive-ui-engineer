@@ -14,9 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = (
     ROOT
     / "plugins"
-    / "adaptive-ui-engineer"
+    / "adaptiveui-skill"
     / "skills"
-    / "adaptive-ui-s"
+    / "adaptiveui-s"
     / "scripts"
     / "audit_ui.py"
 )
@@ -71,13 +71,13 @@ class AuditCliTests(unittest.TestCase):
     def test_version(self) -> None:
         result = self.run_cli("--version")
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout.strip(), "1.1.0")
+        self.assertEqual(result.stdout.strip(), "2.0.0")
 
     def test_good_fixture_has_no_high_priority_findings(self) -> None:
         result, payload = self.run_json(FIXTURES / "good", "--fail-on", "none")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(payload["schema_version"], 2)
-        self.assertEqual(payload["tool"]["name"], "adaptive-ui-engineer")
+        self.assertEqual(payload["schema_version"], 3)
+        self.assertEqual(payload["tool"]["name"], "adaptiveui-skill")
         self.assertEqual(payload["summary"]["by_priority"]["P0"], 0)
         self.assertEqual(payload["summary"]["by_priority"]["P1"], 0)
         self.assertGreaterEqual(payload["summary"]["files_scanned"], 3)
@@ -195,7 +195,7 @@ class AuditCliTests(unittest.TestCase):
                 encoding="utf-8",
             )
             (root / "style.css").write_text(".full { width: 100vw; }", encoding="utf-8")
-            (root / ".adaptive-ui-engineer.json").write_text(
+            (root / ".adaptiveui-skill.json").write_text(
                 json.dumps(
                     {
                         "ignore": [
@@ -249,7 +249,7 @@ class AuditCliTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(result.stdout, "")
             payload = json.loads(output.read_text(encoding="utf-8"))
-        self.assertEqual(payload["schema_version"], 2)
+        self.assertEqual(payload["schema_version"], 3)
 
     def test_invalid_config_returns_two(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -446,7 +446,7 @@ class AuditCliTests(unittest.TestCase):
             (root / "index.html").write_text("<html></html>", encoding="utf-8")
             outside = parent / "outside.json"
             outside.write_text("{}", encoding="utf-8")
-            self.create_symlink_or_skip(outside, root / ".adaptive-ui-engineer.json")
+            self.create_symlink_or_skip(outside, root / ".adaptiveui-skill.json")
             result = self.run_cli(root)
         self.assertEqual(result.returncode, 2)
         self.assertIn("symbolic link or reparse point", result.stderr)

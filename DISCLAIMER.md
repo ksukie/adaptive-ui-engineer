@@ -4,7 +4,7 @@
 
 Last updated: 2026-07-11
 
-Adaptive UI Engineer (the “Project”) is an open-source developer tool for reviewing and improving web-interface code. This notice clarifies the Project's limits; it does not replace or modify the [Apache License, Version 2.0](LICENSE).
+AdaptiveUI-SKILL (the “Project”) is an open-source developer tool for reviewing and improving web-interface code. This notice clarifies the Project's limits; it does not replace or modify the [Apache License, Version 2.0](LICENSE).
 
 ## Tooling purpose, not professional advice
 

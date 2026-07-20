@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for improving Adaptive UI Engineer. Contributions should make responsive-interface work more evidence-based, portable, or maintainable without turning the skill into a framework migration tool.
+Thank you for improving AdaptiveUI-SKILL. Contributions should make responsive-interface work more evidence-based, portable, or maintainable without turning the skill into a framework migration tool.
 
 ## Development requirements
 
@@ -19,12 +19,12 @@ python -m unittest discover -s tests -v
 
 The reference Agent Skills validator and JSON Schema report validator are CI-only. The Agent Skills source commit and archive digest are fixed in `.github/scripts/run_skills_ref.py`, and all CI-only dependencies are version- and hash-locked in `.github/requirements/skills-ref.txt`; do not add these packages to the runtime auditor. When updating the Agent Skills validator, review the upstream diff and update the commit, archive digest, expected source manifest, tests, and changelog together. Never replace the pin with a branch or mutable tag.
 
-For every stable package release, update `adaptive-ui-s/release.json` together with the plugin and auditor versions. Increment `release_sequence` exactly once, use a UTC `released_at` value, keep both summaries to one display-only line, and run the update-scheduler tests before publishing the Raw metadata from the default branch.
+For every stable package release, update `adaptiveui-s/release.json` together with the plugin and auditor versions. Increment `release_sequence` exactly once, use a UTC `released_at` value, keep both summaries to one display-only line, and run the update-scheduler tests before publishing the Raw metadata from the default branch.
 
 Run the auditor manually against a fixture:
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tests/fixtures/bad --format json --fail-on none
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py tests/fixtures/bad --format json --fail-on none
 ```
 
 ## Contribution rules
@@ -36,7 +36,7 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tes
 - Link every bundled reference, script, or asset from `SKILL.md` or product metadata.
 - Keep the description precise enough for positive and negative trigger cases.
 - Preserve the explicit-only activation boundary: neither Skill may activate from a matching request or a prior conversation invocation.
-- Keep `adaptive-ui-n` bounded to task-owned changes and directly related styles; it must not become a whole-repository audit.
+- Keep `adaptiveui-n` bounded to task-owned changes and directly related styles; it must not become a whole-repository audit.
 - When N edits a file with pre-existing changes, preserve the hunk-level distinction between baseline work and task-owned work in the audit report.
 
 ### Auditor rules
@@ -63,7 +63,7 @@ Treat fixture trees as untrusted input. New filesystem behavior must preserve th
 
 ### Documentation
 
-Update both `README.md` and `README.zh-CN.md` when public behavior changes. Update `CHANGELOG.md` for user-visible changes. Cite primary standards or official framework documentation for normative claims.
+Update both `README.md` and `README.en.md` when public behavior changes. Update `CHANGELOG.md` for user-visible changes. Cite primary standards or official framework documentation for normative claims.
 
 ### Contribution license and provenance
 

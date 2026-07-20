@@ -6,7 +6,7 @@ Security fixes are applied to the latest released minor version. Pre-release ver
 
 ## Reporting a vulnerability
 
-Do not disclose a suspected vulnerability, exploit, private fixture, or credential in a public issue. After this repository is published, use [GitHub's private security advisory flow](https://github.com/ksukie/adaptive-ui-engineer/security/advisories/new) and include:
+Do not disclose a suspected vulnerability, exploit, private fixture, or credential in a public issue. After this repository is published, use [GitHub's private security advisory flow](https://github.com/ksukie/AdaptiveUI-SKILL/security/advisories/new) and include:
 
 - the affected version and file;
 - a minimal reproduction or malicious input;
@@ -33,7 +33,7 @@ Do not run third-party project build scripts, browser tests, or package installa
 
 ## Update scheduler security boundaries
 
-The update scheduler is separate from the auditor and runs only for a current explicit Adaptive-UI-S or Adaptive-UI-N invocation when it has not been disabled. The Codex plugin path uses a reviewed `UserPromptSubmit` hook; manually copied Skills can invoke the same standard-library script from their workflow.
+The update scheduler is separate from the auditor and runs only for a current explicit AdaptiveUI-S or AdaptiveUI-N invocation when it has not been disabled. The Codex plugin path uses a reviewed `UserPromptSubmit` hook; manually copied Skills can invoke the same standard-library script from their workflow.
 
 The scheduler:
 

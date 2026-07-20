@@ -1,9 +1,0 @@
-interface:
-  display_name: "Adaptive-UI-S"
-  short_description: "Explicit adaptive UI work derived from product requests"
-  icon_small: "./assets/icon-small.svg"
-  icon_large: "./assets/icon-large.svg"
-  brand_color: "#2563EB"
-  default_prompt: "Use $adaptive-ui-s on this request. Derive and handle only its adaptive-UI effects, even if I do not mention UI."
-policy:
-  allow_implicit_invocation: false

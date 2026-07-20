@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">AdaptiveUI-SKILL</title>
+  <rect width="64" height="64" rx="16" fill="#0f172a"/>
+  <rect x="12" y="13" width="40" height="38" rx="8" fill="none" stroke="#60a5fa" stroke-width="3"/>
+  <path d="M13.5 23.5h37M25 25v24" fill="none" stroke="#93c5fd" stroke-width="2.5"/>
+  <rect x="30" y="29" width="16" height="6" rx="3" fill="#3b82f6"/>
+  <rect x="30" y="39" width="11" height="6" rx="3" fill="#dbeafe"/>
+</svg>

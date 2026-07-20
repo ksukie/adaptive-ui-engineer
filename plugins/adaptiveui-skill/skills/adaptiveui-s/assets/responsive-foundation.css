@@ -1,0 +1,123 @@
+/* AdaptiveUI-SKILL: conservative, opt-in responsive foundation. */
+
+:root {
+  --aui-content-max: 72rem;
+  --aui-reading-max: 70ch;
+  --aui-gutter: clamp(1rem, 0.65rem + 1.5vw, 2rem);
+  --aui-stack-space: clamp(1rem, 0.75rem + 1vw, 1.75rem);
+  --aui-radius-control: 0.625rem;
+  --aui-radius-button: 0.75rem;
+  --aui-radius-card: 1.125rem;
+  --aui-radius-panel: 1.5rem;
+  --aui-radius-showcase: 2rem;
+  --aui-radius-pill: 999px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-inline-size: 0;
+}
+
+img,
+picture,
+video,
+canvas {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+svg,
+iframe {
+  max-inline-size: 100%;
+}
+
+pre {
+  max-inline-size: 100%;
+  overflow: auto;
+  white-space: pre;
+}
+
+:where(p, li, dd, figcaption, td, th) {
+  overflow-wrap: anywhere;
+}
+
+.aui-container {
+  inline-size: min(100% - (2 * var(--aui-gutter)), var(--aui-content-max));
+  margin-inline: auto;
+}
+
+.aui-reading-flow {
+  max-inline-size: var(--aui-reading-max);
+}
+
+.aui-stack > * + * {
+  margin-block-start: var(--aui-stack-space);
+}
+
+.aui-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--aui-stack-space);
+}
+
+.aui-grid > *,
+.aui-flex-child {
+  min-inline-size: 0;
+}
+
+.aui-table-region {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.aui-control {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 0.1875rem solid currentColor;
+  outline-offset: 0.1875rem;
+}
+
+.aui-viewport-min {
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+
+.aui-safe-area {
+  padding-block:
+    max(var(--aui-gutter), env(safe-area-inset-top, 0px))
+    max(var(--aui-gutter), env(safe-area-inset-bottom, 0px));
+  padding-inline:
+    max(var(--aui-gutter), env(safe-area-inset-left, 0px))
+    max(var(--aui-gutter), env(safe-area-inset-right, 0px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.aui-motion, .aui-motion *) {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.aui-card, .aui-panel) {
+    border: 1px solid CanvasText;
+  }
+}

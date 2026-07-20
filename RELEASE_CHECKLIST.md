@@ -6,7 +6,7 @@ Use this checklist for each public release. It separates repository readiness fr
 
 - [ ] Confirm that `ksukie` is the intended public author and repository owner everywhere it appears.
 - [ ] Confirm that the year, release version, project URLs, installation names, and marketplace names are correct.
-- [ ] Confirm that `adaptive-ui-s/release.json`, the plugin manifest, auditor version, scheduler user agent, schema URLs, evidence-status headings, and changelog all name the same stable release.
+- [ ] Confirm that `adaptiveui-s/release.json`, the plugin manifest, auditor version, scheduler user agent, schema URLs, evidence-status headings, and changelog all name the same stable release.
 - [ ] Increment `release_sequence` exactly once, record `released_at` in UTC, and keep the English and Chinese summaries accurate, single-line, display-only, and within 240 characters.
 - [ ] Confirm that every source file and project-owned asset can be released under Apache-2.0.
 - [ ] Preserve required third-party notices if any third-party material is added. Do not create a `NOTICE` file unless there is content that actually requires it.
@@ -30,14 +30,14 @@ On Windows where `python` is not registered, substitute `py -3` in the commands 
 
 ```text
 python -m unittest discover -s tests -v
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py tests/fixtures/good --format json --redact-evidence --fail-on P1
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py tests/fixtures/good --format json --redact-evidence --fail-on P1
 ```
 
 - [ ] Run the suite with Python 3.9, 3.10, and 3.11 locally; let hosted CI cover the documented wider matrix.
 - [ ] Run the current Codex Skill Creator structural validator.
 - [ ] Run the current Codex Plugin Creator manifest validator.
 - [ ] Run the hash-locked open Agent Skills reference validator.
-- [ ] Confirm Codex surfaces the bundled `Adaptive-UI-S` and `Adaptive-UI-N` labels. If the host also shows the `Adaptive UI Engineer` plugin parent, treat it as a container rather than a third workflow.
+- [ ] Confirm Codex surfaces the bundled `AdaptiveUI-S` and `AdaptiveUI-N` labels. If the host also shows the `AdaptiveUI-SKILL` plugin parent, treat it as a container rather than a third workflow.
 - [ ] In a fresh Codex chat, invoke each Skill once, then send a matching UI request without `@` or `$`; verify that no implicit Skill invocation occurs on that later message.
 - [ ] Smoke-test S's read-only final review and N's required, scoped post-change style audit without expanding either into a whole-repository review.
 - [ ] Smoke-test N against a task that edits a file with pre-existing changes; verify that the report separates baseline and task-owned hunks.

@@ -16,7 +16,7 @@ except ImportError:  # The validator is installed only in its pinned CI job.
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = ROOT / "plugins" / "adaptive-ui-engineer" / "skills" / "adaptive-ui-s"
+SKILL = ROOT / "plugins" / "adaptiveui-skill" / "skills" / "adaptiveui-s"
 SCRIPT = SKILL / "scripts" / "audit_ui.py"
 SCHEMA = SKILL / "assets" / "audit-report.schema.json"
 FIXTURE = ROOT / "tests" / "fixtures" / "bad"

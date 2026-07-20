@@ -2,55 +2,55 @@
   "schema_version": 3,
   "skills": [
     {
-      "name": "adaptive-ui-s",
-      "display_name": "Adaptive-UI-S",
+      "name": "adaptiveui-s",
+      "display_name": "AdaptiveUI-S",
       "positive": [
         {
-          "prompt": "Use $adaptive-ui-s to audit this HTML page for mobile overflow and zoom problems. Do not edit files.",
+          "prompt": "Use $adaptiveui-s to audit this HTML page for mobile overflow and zoom problems. Do not edit files.",
           "reason": "Explicit standard responsive audit with a read-only boundary."
         },
         {
-          "prompt": "Use $adaptive-ui-s to simplify the index page CSS and JavaScript without changing sibling pages.",
+          "prompt": "Use $adaptiveui-s to simplify the index page CSS and JavaScript without changing sibling pages.",
           "reason": "Explicit scoped UI refactor under the standard workflow."
         },
         {
-          "prompt": "Use $adaptive-ui-s to review the final checkout task after our intermittent work. Inspect only the changed checkout files and their direct styles; do not edit.",
+          "prompt": "Use $adaptiveui-s to review the final checkout task after our intermittent work. Inspect only the changed checkout files and their direct styles; do not edit.",
           "reason": "Explicit, user-requested final review after intermittent work."
         },
         {
-          "prompt": "Use $adaptive-ui-s to diagnose why this React card grid clips in iOS Safari when the address bar changes.",
+          "prompt": "Use $adaptiveui-s to diagnose why this React card grid clips in iOS Safari when the address bar changes.",
           "reason": "Explicit cross-browser responsive diagnosis."
         },
         {
-          "prompt": "Use $adaptive-ui-s to normalize this card radius hierarchy and verify keyboard focus remains visible.",
+          "prompt": "Use $adaptiveui-s to normalize this card radius hierarchy and verify keyboard focus remains visible.",
           "reason": "Explicit visual-hierarchy and accessibility work in the standard workflow."
         },
         {
-          "prompt": "Use $adaptive-ui-s to add workspace invitations with owner, editor, and viewer roles.",
+          "prompt": "Use $adaptiveui-s to add workspace invitations with owner, editor, and viewer roles.",
           "reason": "Explicit product-function request without UI terminology; S must derive the invitation entry, form, role controls, and user-visible states."
         },
         {
-          "prompt": "Use $adaptive-ui-s for a medication reminder used mostly by older adults and translated into languages with long medicine names.",
+          "prompt": "Use $adaptiveui-s for a medication reminder used mostly by older adults and translated into languages with long medicine names.",
           "reason": "Target users and content length are indirect UI constraints even though the prompt never names UI."
         },
         {
-          "prompt": "Use $adaptive-ui-s to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
+          "prompt": "Use $adaptiveui-s to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
           "reason": "S must derive the invitation UI while keeping unrelated storage and deployment details outside its UI decisions and audit scope."
         },
         {
-          "prompt": "Use $adaptive-ui-s to optimize this PostgreSQL query and add an index.",
-          "reason": "The explicit invocation still runs the UI-relevance gate; with no in-scope adaptive UI effect, S makes no change under its workflow and does not reclassify database work as Adaptive-UI work."
+          "prompt": "Use $adaptiveui-s to optimize this PostgreSQL query and add an index.",
+          "reason": "The explicit invocation still runs the UI-relevance gate; with no in-scope adaptive UI effect, S makes no change under its workflow and does not reclassify database work as AdaptiveUI work."
         },
         {
-          "prompt": "Use $adaptive-ui-s. This project needs workspace invitations with owner, editor, and viewer roles.",
-          "reason": "A concrete desired product state in an implementation context authorizes the derived Adaptive-UI slice without requiring a fixed implementation verb."
+          "prompt": "Use $adaptiveui-s. This project needs workspace invitations with owner, editor, and viewer roles.",
+          "reason": "A concrete desired product state in an implementation context authorizes the derived AdaptiveUI slice without requiring a fixed implementation verb."
         },
         {
-          "prompt": "Use $adaptive-ui-s to change this button from blue to green without changing hierarchy, contrast, state, layout, interaction, accessibility, or compatibility.",
-          "reason": "The explicit invocation runs the gate, but a cosmetic-only request has no in-scope adaptive UI effect and produces no Adaptive-UI-owned change."
+          "prompt": "Use $adaptiveui-s to change this button from blue to green without changing hierarchy, contrast, state, layout, interaction, accessibility, or compatibility.",
+          "reason": "The explicit invocation runs the gate, but a cosmetic-only request has no in-scope adaptive UI effect and produces no AdaptiveUI-owned change."
         },
         {
-          "prompt": "Use $adaptive-ui-s to diagnose why Chinese and emoji are garbled in the browser preview. Do not edit files.",
+          "prompt": "Use $adaptiveui-s to diagnose why Chinese and emoji are garbled in the browser preview. Do not edit files.",
           "reason": "Rendered character encoding is an explicit adaptive UI and browser-compatibility concern."
         }
       ],
@@ -76,7 +76,7 @@
           "reason": "Copy-only component edit outside the Skill's adaptive-UI scope."
         },
         {
-          "prompt": "Because Adaptive-UI-S was used earlier in this conversation, run it again automatically for this unrelated task.",
+          "prompt": "Because AdaptiveUI-S was used earlier in this conversation, run it again automatically for this unrelated task.",
           "reason": "A prior invocation never activates the Skill for a later message."
         },
         {
@@ -84,97 +84,97 @@
           "reason": "A matching UI-bearing product request does not activate S without a current explicit invocation."
         },
         {
-          "prompt": "Use $adaptive-ui-n to implement the responsive invitation flow and run its required audit.",
+          "prompt": "Use $adaptiveui-n to implement the responsive invitation flow and run its required audit.",
           "reason": "An explicit N invocation does not also activate S."
         }
       ],
       "behavior": [
         {
-          "prompt": "Use $adaptive-ui-s to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
-          "expected": "Derive and handle the invitation flow's adaptive UI effects. Keep storage and deployment outside Adaptive-UI decisions, tests, evidence, and completion claims. A clear broader request in the same message may be handled under other applicable instructions; a background fact or Skill invocation alone cannot authorize it.",
-          "reason": "The relevance gate partitions the Adaptive-UI portion without silently canceling or authorizing the broader task."
+          "prompt": "Use $adaptiveui-s to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
+          "expected": "Derive and handle the invitation flow's adaptive UI effects. Keep storage and deployment outside AdaptiveUI decisions, tests, evidence, and completion claims. A clear broader request in the same message may be handled under other applicable instructions; a background fact or Skill invocation alone cannot authorize it.",
+          "reason": "The relevance gate partitions the AdaptiveUI portion without silently canceling or authorizing the broader task."
         },
         {
-          "prompt": "Use $adaptive-ui-s to change this button from blue to green and fix a typo, with no effect on hierarchy, contrast, state, reflow, accessibility, or compatibility.",
-          "expected": "Run the relevance gate, find no in-scope adaptive UI effect, make no change under the Adaptive-UI workflow, and do not invent responsive work. Any clearly requested cosmetic or copy edit remains outside this workflow.",
+          "prompt": "Use $adaptiveui-s to change this button from blue to green and fix a typo, with no effect on hierarchy, contrast, state, reflow, accessibility, or compatibility.",
+          "expected": "Run the relevance gate, find no in-scope adaptive UI effect, make no change under the AdaptiveUI workflow, and do not invent responsive work. Any clearly requested cosmetic or copy edit remains outside this workflow.",
           "reason": "Cosmetic-only and copy-only UI requests remain outside the adaptive UI scope even when S is explicitly invoked."
         },
         {
-          "prompt": "Use both $adaptive-ui-s and $adaptive-ui-n to audit the checkout page. Do not edit files.",
-          "expected": "Adaptive-UI-S owns the request and keeps it read-only; Adaptive-UI-N does not run its implementation or post-change gate.",
+          "prompt": "Use both $adaptiveui-s and $adaptiveui-n to audit the checkout page. Do not edit files.",
+          "expected": "AdaptiveUI-S owns the request and keeps it read-only; AdaptiveUI-N does not run its implementation or post-change gate.",
           "reason": "Explicit read-only intent deterministically resolves a dual invocation to S."
         },
         {
-          "prompt": "Use both $adaptive-ui-s and $adaptive-ui-n to implement workspace invitations.",
-          "expected": "Adaptive-UI-N owns the implementation and completes its bounded post-change audit; S does not run separately.",
+          "prompt": "Use both $adaptiveui-s and $adaptiveui-n to implement workspace invitations.",
+          "expected": "AdaptiveUI-N owns the implementation and completes its bounded post-change audit; S does not run separately.",
           "reason": "An implementation request deterministically resolves a dual invocation to N."
         },
         {
-          "prompt": "Use $adaptive-ui-s. This project needs workspace invitations, but no page or component is named.",
+          "prompt": "Use $adaptiveui-s. This project needs workspace invitations, but no page or component is named.",
           "expected": "Inspect the route or entry map, locate the named invitation flow or states, follow only direct components, styles, tokens, and required wrappers, then stop.",
           "reason": "Automatic UI discovery is bounded and cannot become a whole-repository scan."
         },
         {
-          "prompt": "Use $adaptive-ui-s to audit why Chinese and emoji are garbled in the browser preview.",
+          "prompt": "Use $adaptiveui-s to audit why Chinese and emoji are garbled in the browser preview.",
           "expected": "Separate source UTF-8 validity, the early HTML declaration, HTTP Content-Type metadata, and document.characterSet; report which layer is verified or unverified.",
           "reason": "Browser decoding requires transport and runtime evidence, not only valid source bytes."
         }
       ]
     },
     {
-      "name": "adaptive-ui-n",
-      "display_name": "Adaptive-UI-N",
+      "name": "adaptiveui-n",
+      "display_name": "AdaptiveUI-N",
       "positive": [
         {
-          "prompt": "Use $adaptive-ui-n to fix the mobile navigation focus order, then complete the required post-change style audit.",
+          "prompt": "Use $adaptiveui-n to fix the mobile navigation focus order, then complete the required post-change style audit.",
           "reason": "Explicit UI implementation with the mandatory completion gate."
         },
         {
-          "prompt": "Use $adaptive-ui-n to make this React card grid reflow cleanly. Before completion, audit only this task's changed files and directly related styles.",
+          "prompt": "Use $adaptiveui-n to make this React card grid reflow cleanly. Before completion, audit only this task's changed files and directly related styles.",
           "reason": "Explicit responsive implementation with a bounded mandatory audit."
         },
         {
-          "prompt": "Use $adaptive-ui-n to remove the wheel-driven full-page snapping while preserving content hierarchy, then verify and report the required style review.",
+          "prompt": "Use $adaptiveui-n to remove the wheel-driven full-page snapping while preserving content hierarchy, then verify and report the required style review.",
           "reason": "Explicit interaction simplification plus mandatory post-change review."
         },
         {
-          "prompt": "Use $adaptive-ui-n to repair this Tailwind overflow issue without changing sibling pages, then inspect the modified component and directly related utilities before you finish.",
+          "prompt": "Use $adaptiveui-n to repair this Tailwind overflow issue without changing sibling pages, then inspect the modified component and directly related utilities before you finish.",
           "reason": "Explicit narrow UI repair with scope-limited post-change auditing."
         },
         {
-          "prompt": "Use $adaptive-ui-n to fix the checkout card layout. Card.tsx already contains unrelated unstaged edits, so keep the file in scope, audit only this task's hunk and direct styles, and report the baseline separately.",
+          "prompt": "Use $adaptiveui-n to fix the checkout card layout. Card.tsx already contains unrelated unstaged edits, so keep the file in scope, audit only this task's hunk and direct styles, and report the baseline separately.",
           "reason": "Explicit N work preserves the distinction between pre-existing and task-owned hunks."
         },
         {
-          "prompt": "Use $adaptive-ui-n to add workspace invitations with owner, editor, and viewer roles.",
+          "prompt": "Use $adaptiveui-n to add workspace invitations with owner, editor, and viewer roles.",
           "reason": "Explicit product-function request without UI terminology; N must derive and implement the user-visible invitation flow before its mandatory audit."
         },
         {
-          "prompt": "Use $adaptive-ui-n to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
-          "reason": "N must derive and audit only the invitation UI; unrelated storage and deployment details cannot shape or expand the Adaptive-UI scope."
+          "prompt": "Use $adaptiveui-n to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
+          "reason": "N must derive and audit only the invitation UI; unrelated storage and deployment details cannot shape or expand the AdaptiveUI scope."
         },
         {
-          "prompt": "Use $adaptive-ui-n to optimize this PostgreSQL query and add an index.",
-          "reason": "The explicit invocation still runs the UI-relevance gate; with no in-scope adaptive UI effect, N makes no change under its workflow, marks its post-change audit not applicable, and does not reclassify database work as Adaptive-UI work."
+          "prompt": "Use $adaptiveui-n to optimize this PostgreSQL query and add an index.",
+          "reason": "The explicit invocation still runs the UI-relevance gate; with no in-scope adaptive UI effect, N makes no change under its workflow, marks its post-change audit not applicable, and does not reclassify database work as AdaptiveUI work."
         },
         {
-          "prompt": "After changing one checkout button, use $adaptive-ui-n to scan and fix every historical style issue in the repository.",
+          "prompt": "After changing one checkout button, use $adaptiveui-n to scan and fix every historical style issue in the repository.",
           "reason": "The explicit invocation activates N, but the unrelated historical cleanup cannot expand its mandatory audit beyond task-owned UI changes and direct styles."
         },
         {
-          "prompt": "Use $adaptive-ui-n. This project needs workspace invitations with owner, editor, and viewer roles.",
-          "reason": "A concrete desired product state in an N implementation context authorizes the derived Adaptive-UI slice without requiring a fixed implementation verb."
+          "prompt": "Use $adaptiveui-n. This project needs workspace invitations with owner, editor, and viewer roles.",
+          "reason": "A concrete desired product state in an N implementation context authorizes the derived AdaptiveUI slice without requiring a fixed implementation verb."
         },
         {
-          "prompt": "Use $adaptive-ui-n to change this button from blue to green without changing hierarchy, contrast, state, layout, interaction, accessibility, or compatibility.",
+          "prompt": "Use $adaptiveui-n to change this button from blue to green without changing hierarchy, contrast, state, layout, interaction, accessibility, or compatibility.",
           "reason": "N runs the relevance gate, finds no in-scope adaptive UI change, and marks its post-change audit not applicable."
         },
         {
-          "prompt": "Use $adaptive-ui-n to give a read-only audit report for this page. Do not inspect or edit until the correct mode is selected.",
+          "prompt": "Use $adaptiveui-n to give a read-only audit report for this page. Do not inspect or edit until the correct mode is selected.",
           "reason": "An N-only read-only request activates mode handling but must stop without inspection or edits and require a current-message S invocation."
         },
         {
-          "prompt": "Use $adaptive-ui-n to fix the garbled Chinese browser preview and complete the required scoped audit.",
+          "prompt": "Use $adaptiveui-n to fix the garbled Chinese browser preview and complete the required scoped audit.",
           "reason": "Rendered character encoding is an in-scope browser concern and must be included in N's implementation and audit."
         }
       ],
@@ -200,47 +200,47 @@
           "reason": "A matching implementation request does not activate N without a current explicit invocation."
         },
         {
-          "prompt": "Adaptive-UI-N was selected earlier, so automatically use it for this message even though I did not invoke it now.",
+          "prompt": "AdaptiveUI-N was selected earlier, so automatically use it for this message even though I did not invoke it now.",
           "reason": "A prior invocation never activates the Skill for a later message."
         },
         {
-          "prompt": "Use $adaptive-ui-s to audit the invitation flow without editing files.",
+          "prompt": "Use $adaptiveui-s to audit the invitation flow without editing files.",
           "reason": "An explicit S invocation does not also activate N."
         }
       ],
       "behavior": [
         {
-          "prompt": "Use $adaptive-ui-n to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
-          "expected": "Implement and audit the invitation flow's adaptive UI effects. Keep storage and deployment outside Adaptive-UI decisions and the mandatory audit. A clear broader request in the same message may be handled under other applicable instructions; a background fact or Skill invocation alone cannot authorize it.",
+          "prompt": "Use $adaptiveui-n to add workspace invitations, store tokens in PostgreSQL, and deploy the API on Kubernetes.",
+          "expected": "Implement and audit the invitation flow's adaptive UI effects. Keep storage and deployment outside AdaptiveUI decisions and the mandatory audit. A clear broader request in the same message may be handled under other applicable instructions; a background fact or Skill invocation alone cannot authorize it.",
           "reason": "The relevance gate partitions N-owned work without silently canceling or authorizing the broader task."
         },
         {
-          "prompt": "Use $adaptive-ui-n to change this button from blue to green and fix a typo, with no effect on hierarchy, contrast, state, reflow, accessibility, or compatibility.",
-          "expected": "Run the relevance gate, find no in-scope adaptive UI effect, make no change under the Adaptive-UI workflow, and mark the post-change style audit not applicable. Any clearly requested cosmetic or copy edit remains outside this workflow.",
+          "prompt": "Use $adaptiveui-n to change this button from blue to green and fix a typo, with no effect on hierarchy, contrast, state, reflow, accessibility, or compatibility.",
+          "expected": "Run the relevance gate, find no in-scope adaptive UI effect, make no change under the AdaptiveUI workflow, and mark the post-change style audit not applicable. Any clearly requested cosmetic or copy edit remains outside this workflow.",
           "reason": "Cosmetic-only and copy-only UI requests remain outside the adaptive UI scope even when N is explicitly invoked."
         },
         {
-          "prompt": "Use $adaptive-ui-n to audit the checkout page. Do not edit files.",
+          "prompt": "Use $adaptiveui-n to audit the checkout page. Do not edit files.",
           "expected": "Do not inspect or edit the project and do not silently activate S. Explain that N is implementation-only and require a current-message S invocation for the read-only workflow.",
           "reason": "N-only read-only behavior is deterministic and preserves explicit-only S activation."
         },
         {
-          "prompt": "Use both $adaptive-ui-s and $adaptive-ui-n to audit the checkout page. Do not edit files.",
-          "expected": "Adaptive-UI-S owns the read-only request; N does not run its implementation or mandatory post-change audit.",
+          "prompt": "Use both $adaptiveui-s and $adaptiveui-n to audit the checkout page. Do not edit files.",
+          "expected": "AdaptiveUI-S owns the read-only request; N does not run its implementation or mandatory post-change audit.",
           "reason": "Explicit read-only intent deterministically resolves a dual invocation to S."
         },
         {
-          "prompt": "Use both $adaptive-ui-s and $adaptive-ui-n to implement workspace invitations.",
-          "expected": "Adaptive-UI-N owns the implementation and completes the bounded mandatory audit over every task-owned UI-affecting change.",
+          "prompt": "Use both $adaptiveui-s and $adaptiveui-n to implement workspace invitations.",
+          "expected": "AdaptiveUI-N owns the implementation and completes the bounded mandatory audit over every task-owned UI-affecting change.",
           "reason": "Implementation intent deterministically resolves a dual invocation to N."
         },
         {
-          "prompt": "Use $adaptive-ui-n to implement workspace invitations across the frontend and API, then complete the required audit.",
+          "prompt": "Use $adaptiveui-n to implement workspace invitations across the frontend and API, then complete the required audit.",
           "expected": "Audit every task-owned hunk that has a direct or indirect adaptive UI effect, regardless of when it was produced; exclude API-only and other non-UI hunks.",
           "reason": "Audit ownership follows task-owned UI impact rather than an ambiguous Skill-owned author label."
         },
         {
-          "prompt": "Use $adaptive-ui-n to fix the garbled Chinese browser preview and complete the required audit.",
+          "prompt": "Use $adaptiveui-n to fix the garbled Chinese browser preview and complete the required audit.",
           "expected": "Verify source UTF-8 validity, one early HTML declaration, HTTP Content-Type metadata, and document.characterSet, then include the encoding evidence in the scoped audit report.",
           "reason": "N must verify the browser's effective decoding rather than infer it from source bytes."
         }

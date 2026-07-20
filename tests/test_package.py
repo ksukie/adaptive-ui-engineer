@@ -8,9 +8,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN = ROOT / "plugins" / "adaptive-ui-engineer"
-S_SKILL = PLUGIN / "skills" / "adaptive-ui-s"
-N_SKILL = PLUGIN / "skills" / "adaptive-ui-n"
+PLUGIN = ROOT / "plugins" / "adaptiveui-skill"
+S_SKILL = PLUGIN / "skills" / "adaptiveui-s"
+N_SKILL = PLUGIN / "skills" / "adaptiveui-n"
 MODE_SELECTION_GUIDE = S_SKILL / "references" / "mode-selection.md"
 VERIFICATION_PROTOCOL = S_SKILL / "references" / "verification-protocol.md"
 RELEASE_METADATA = S_SKILL / "release.json"
@@ -18,8 +18,8 @@ UPDATE_CHECKER = S_SKILL / "scripts" / "check_update.py"
 PLUGIN_HOOKS = PLUGIN / "hooks" / "hooks.json"
 SKILL = S_SKILL
 SKILLS = {
-    "adaptive-ui-s": S_SKILL,
-    "adaptive-ui-n": N_SKILL,
+    "adaptiveui-s": S_SKILL,
+    "adaptiveui-n": N_SKILL,
 }
 
 
@@ -27,7 +27,8 @@ class PackageContractTests(unittest.TestCase):
     def test_required_public_files_exist(self) -> None:
         paths = [
             ROOT / "README.md",
-            ROOT / "README.zh-CN.md",
+            ROOT / "README.en.md",
+            ROOT / "docs" / "images" / "adaptiveui-skill-workflow.png",
             ROOT / "LICENSE",
             ROOT / "CONTRIBUTING.md",
             ROOT / "SECURITY.md",
@@ -56,7 +57,7 @@ class PackageContractTests(unittest.TestCase):
 
     def test_plugin_manifest_contract(self) -> None:
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["name"], "adaptive-ui-engineer")
+        self.assertEqual(manifest["name"], "adaptiveui-skill")
         self.assertRegex(manifest["version"], r"^\d+\.\d+\.\d+$")
         self.assertEqual(manifest["license"], "Apache-2.0")
         self.assertEqual(manifest["author"]["name"], "ksukie")
@@ -65,7 +66,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertNotIn("apps", manifest)
         self.assertNotIn("hooks", manifest)
         interface = manifest["interface"]
-        self.assertEqual(interface["displayName"], "Adaptive UI Engineer")
+        self.assertEqual(interface["displayName"], "AdaptiveUI-SKILL")
         self.assertLessEqual(len(interface["defaultPrompt"]), 3)
         self.assertTrue(all(len(item) <= 128 for item in interface["defaultPrompt"]))
         for field in ("composerIcon", "logo"):
@@ -76,11 +77,11 @@ class PackageContractTests(unittest.TestCase):
         marketplace = json.loads(
             (ROOT / ".agents" / "plugins" / "marketplace.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(marketplace["name"], "adaptive-ui-engineer")
-        self.assertEqual(marketplace["interface"]["displayName"], "Adaptive UI Engineer")
+        self.assertEqual(marketplace["name"], "adaptiveui-skill")
+        self.assertEqual(marketplace["interface"]["displayName"], "AdaptiveUI-SKILL")
         self.assertEqual(len(marketplace["plugins"]), 1)
         entry = marketplace["plugins"][0]
-        self.assertEqual(entry["name"], "adaptive-ui-engineer")
+        self.assertEqual(entry["name"], "adaptiveui-skill")
         self.assertEqual(entry["policy"]["installation"], "AVAILABLE")
         self.assertEqual(entry["policy"]["authentication"], "ON_INSTALL")
         source = ROOT / entry["source"]["path"].removeprefix("./")
@@ -117,8 +118,8 @@ class PackageContractTests(unittest.TestCase):
 
     def test_openai_metadata_references_real_assets_and_skill(self) -> None:
         metadata = {
-            "adaptive-ui-s": (S_SKILL, "Adaptive-UI-S", "$adaptive-ui-s"),
-            "adaptive-ui-n": (N_SKILL, "Adaptive-UI-N", "$adaptive-ui-n"),
+            "adaptiveui-s": (S_SKILL, "AdaptiveUI-S", "$adaptiveui-s"),
+            "adaptiveui-n": (N_SKILL, "AdaptiveUI-N", "$adaptiveui-n"),
         }
         for name, (skill, display_name, invocation) in metadata.items():
             with self.subTest(skill=name):
@@ -142,8 +143,8 @@ class PackageContractTests(unittest.TestCase):
         enhanced = (N_SKILL / "SKILL.md").read_text(encoding="utf-8")
         for content in (standard, enhanced):
             self.assertIn("Do not activate from a matching task description", content)
-            self.assertIn("If the current message names neither Adaptive-UI-S nor Adaptive-UI-N", content)
-        self.assertIn("Adaptive-UI-S never adds a completion audit automatically", standard)
+            self.assertIn("If the current message names neither AdaptiveUI-S nor AdaptiveUI-N", content)
+        self.assertIn("AdaptiveUI-S never adds a completion audit automatically", standard)
         self.assertIn("User-requested final review after intermittent work", standard)
         self.assertIn("This review is required before claiming the task is complete", enhanced)
         self.assertIn("Do not turn this into a whole-repository audit", enhanced)
@@ -151,8 +152,8 @@ class PackageContractTests(unittest.TestCase):
         self.assertIn("task-owned hunk", enhanced)
         self.assertIn("Before editing, confirm that the sibling auditor exists", enhanced)
         self.assertIn("do not claim an N completion", enhanced)
-        self.assertIn("Adaptive-UI-S owns an explicitly read-only request", standard)
-        self.assertIn("use Adaptive-UI-S for an explicitly read-only request", enhanced)
+        self.assertIn("AdaptiveUI-S owns an explicitly read-only request", standard)
+        self.assertIn("use AdaptiveUI-S for an explicitly read-only request", enhanced)
         self.assertIn("If the current message invokes only N but explicitly forbids edits", enhanced)
         self.assertIn("do not silently activate S", enhanced)
 
@@ -181,7 +182,7 @@ class PackageContractTests(unittest.TestCase):
                 content,
             )
             self.assertIn("inspected project evidence and applicable local instructions", content)
-            self.assertIn("Use this gate to partition the Adaptive-UI portion", content)
+            self.assertIn("Use this gate to partition the AdaptiveUI portion", content)
             self.assertIn("A clear request in the same message can separately authorize broader work", content)
             self.assertIn("a background fact or the Skill invocation alone cannot", content)
             self.assertIn("inspect the project entry-point or route map", content)
@@ -190,7 +191,7 @@ class PackageContractTests(unittest.TestCase):
                 content,
             )
             self.assertIn("rendered character encoding", content)
-        self.assertIn("named or derived Adaptive-UI scope", standard)
+        self.assertIn("named or derived AdaptiveUI scope", standard)
         self.assertIn("post-change style audit not applicable", enhanced)
         self.assertIn("every task-owned change made after the baseline", enhanced)
         self.assertIn("Exclude task-owned backend, database, deployment", enhanced)
@@ -213,7 +214,7 @@ class PackageContractTests(unittest.TestCase):
                 self.assertIn("Do not proactively mention this default in the completion report.", content)
 
     def test_n_companion_resources_are_available(self) -> None:
-        companion = N_SKILL.parent / "adaptive-ui-s"
+        companion = N_SKILL.parent / "adaptiveui-s"
         self.assertEqual(companion.resolve(), S_SKILL.resolve())
         self.assertTrue((companion / "scripts" / "audit_ui.py").is_file())
         self.assertTrue((companion / "references" / "verification-protocol.md").is_file())
@@ -225,11 +226,11 @@ class PackageContractTests(unittest.TestCase):
         guide = MODE_SELECTION_GUIDE.read_text(encoding="utf-8")
         standard = (S_SKILL / "SKILL.md").read_text(encoding="utf-8")
         enhanced = (N_SKILL / "SKILL.md").read_text(encoding="utf-8")
-        self.assertIn("`Adaptive-UI-S`", guide)
-        self.assertIn("`Adaptive-UI-N`", guide)
+        self.assertIn("`AdaptiveUI-S`", guide)
+        self.assertIn("`AdaptiveUI-N`", guide)
         self.assertIn("does not activate either workflow", guide)
-        self.assertIn("$adaptive-ui-s", guide)
-        self.assertIn("$adaptive-ui-n", guide)
+        self.assertIn("$adaptiveui-s", guide)
+        self.assertIn("$adaptiveui-n", guide)
         self.assertIn("Standalone copywriting, typo-only edits, and cosmetic-only changes", guide)
         self.assertIn("If only N is invoked for an explicitly read-only request", guide)
         self.assertIn("S owns an explicitly read-only request", guide)
@@ -240,7 +241,7 @@ class PackageContractTests(unittest.TestCase):
         discovered = sorted(
             path.name for path in (PLUGIN / "skills").iterdir() if (path / "SKILL.md").is_file()
         )
-        self.assertEqual(discovered, ["adaptive-ui-n", "adaptive-ui-s"])
+        self.assertEqual(discovered, ["adaptiveui-n", "adaptiveui-s"])
 
     def test_preview_encoding_verification_is_layered_and_bounded(self) -> None:
         protocol = VERIFICATION_PROTOCOL.read_text(encoding="utf-8")
@@ -298,12 +299,12 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(match.group(1), manifest["version"])
         self.assertEqual(release["version"], manifest["version"])
         self.assertIn(
-            '"User-Agent": "adaptive-ui-engineer-update-check/{0}"'.format(
+            '"User-Agent": "adaptiveui-skill-update-check/{0}"'.format(
                 manifest["version"]
             ),
             checker,
         )
-        self.assertEqual(manifest["version"], "1.1.0")
+        self.assertEqual(manifest["version"], "2.0.0")
 
     def test_update_release_metadata_contract(self) -> None:
         release = json.loads(RELEASE_METADATA.read_text(encoding="utf-8"))
@@ -312,7 +313,7 @@ class PackageContractTests(unittest.TestCase):
         )
         self.assertRegex(release["version"], r"^\d+\.\d+\.\d+$")
         self.assertRegex(release["released_at"], r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
-        self.assertEqual(release["release_sequence"], 8)
+        self.assertEqual(release["release_sequence"], 9)
         self.assertEqual(set(release["summary"]), {"zh-CN", "en"})
         for summary in release["summary"].values():
             self.assertTrue(summary.strip())
@@ -327,7 +328,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertNotIn("matcher", entry)
         handler = entry["hooks"][0]
         self.assertEqual(handler["type"], "command")
-        self.assertIn("$PLUGIN_ROOT/skills/adaptive-ui-s/scripts/check_update.py", handler["command"])
+        self.assertIn("$PLUGIN_ROOT/skills/adaptiveui-s/scripts/check_update.py", handler["command"])
         self.assertIn("$env:PLUGIN_ROOT", handler["commandWindows"])
         self.assertIn("--hook", handler["command"])
         self.assertIn("--hook", handler["commandWindows"])
@@ -420,7 +421,7 @@ class PackageContractTests(unittest.TestCase):
         ):
             self.assertNotIn(dangerous, source)
         self.assertIn(
-            '"https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/main/"',
+            '"https://raw.githubusercontent.com/ksukie/AdaptiveUI-SKILL/main/"',
             source,
         )
 
@@ -434,11 +435,11 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(config_schema["type"], "object")
         self.assertEqual(
             config_schema["$id"],
-            "https://raw.githubusercontent.com/ksukie/adaptive-ui-engineer/v1.1.0/"
-            "plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/"
+            "https://raw.githubusercontent.com/ksukie/AdaptiveUI-SKILL/v2.0.0/"
+            "plugins/adaptiveui-skill/skills/adaptiveui-s/assets/"
             "audit-config.schema.json",
         )
-        self.assertEqual(report_schema["properties"]["schema_version"]["const"], 2)
+        self.assertEqual(report_schema["properties"]["schema_version"]["const"], 3)
         finding = report_schema["$defs"]["finding"]
         self.assertTrue(
             {"confidence", "evidence_level", "validation_state"}.issubset(
@@ -460,7 +461,7 @@ class PackageContractTests(unittest.TestCase):
         self.assertEqual(set(evals), {"schema_version", "skills"})
         self.assertEqual(
             {skill["name"] for skill in evals["skills"]},
-            {"adaptive-ui-s", "adaptive-ui-n"},
+            {"adaptiveui-s", "adaptiveui-n"},
         )
         for skill in evals["skills"]:
             self.assertEqual(
@@ -479,10 +480,10 @@ class PackageContractTests(unittest.TestCase):
                 self.assertTrue(case["prompt"].strip())
                 self.assertTrue(case["expected"].strip())
                 self.assertTrue(case["reason"].strip())
-        standard = next(skill for skill in evals["skills"] if skill["name"] == "adaptive-ui-s")
-        enhanced = next(skill for skill in evals["skills"] if skill["name"] == "adaptive-ui-n")
-        self.assertEqual(standard["display_name"], "Adaptive-UI-S")
-        self.assertEqual(enhanced["display_name"], "Adaptive-UI-N")
+        standard = next(skill for skill in evals["skills"] if skill["name"] == "adaptiveui-s")
+        enhanced = next(skill for skill in evals["skills"] if skill["name"] == "adaptiveui-n")
+        self.assertEqual(standard["display_name"], "AdaptiveUI-S")
+        self.assertEqual(enhanced["display_name"], "AdaptiveUI-N")
         self.assertTrue(any("cosmetic" in case["reason"] for case in standard["negative"]))
         self.assertTrue(any("mandatory" in case["reason"] for case in enhanced["positive"]))
         for skill in (standard, enhanced):
@@ -516,7 +517,7 @@ class PackageContractTests(unittest.TestCase):
             )
             self.assertTrue(
                 any(
-                    "Use both $adaptive-ui-s and $adaptive-ui-n" in case["prompt"]
+                    "Use both $adaptiveui-s and $adaptiveui-n" in case["prompt"]
                     and "read-only" in case["expected"]
                     for case in behavior
                 )
@@ -544,16 +545,21 @@ class PackageContractTests(unittest.TestCase):
         )
 
     def test_readmes_state_current_release_and_portability_boundary(self) -> None:
-        english = (ROOT / "README.md").read_text(encoding="utf-8")
-        chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
-        self.assertIn("### Evidence status for 1.1.0", english)
-        self.assertIn("### 1.1.0 证据状态", chinese)
+        english = (ROOT / "README.en.md").read_text(encoding="utf-8")
+        chinese = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertFalse((ROOT / "README.zh-CN.md").exists())
+        self.assertIn("[English](README.en.md)", chinese)
+        self.assertIn("[简体中文](README.md)", english)
+        self.assertIn("docs/images/adaptiveui-skill-workflow.png", chinese)
+        self.assertIn("docs/images/adaptiveui-skill-workflow.png", english)
+        self.assertIn("### Evidence status for 2.0.0", english)
+        self.assertIn("### 2.0.0 证据状态", chinese)
         self.assertIn("mode-selection guide", english)
         self.assertIn("模式选择说明", chinese)
         self.assertNotIn("future CI", english)
         self.assertNotIn("未来 CI", chinese)
-        self.assertIn("`adaptive-ui-s` and `adaptive-ui-n` directories together", english)
-        self.assertIn("`adaptive-ui-s` 与 `adaptive-ui-n` 保持在同级", chinese)
+        self.assertIn("`adaptiveui-s` and `adaptiveui-n` directories together", english)
+        self.assertIn("`adaptiveui-s` 与 `adaptiveui-n` 保持在同级", chinese)
         self.assertIn("Both Skills declare explicit-only invocation", english)
         self.assertIn("plugin parent; it is a container", english)
         self.assertIn("两个 Skill 都声明为仅显式调用", chinese)
@@ -700,7 +706,7 @@ class PackageContractTests(unittest.TestCase):
     def test_public_markdown_relative_links_resolve(self) -> None:
         documents = [
             ROOT / "README.md",
-            ROOT / "README.zh-CN.md",
+            ROOT / "README.en.md",
             ROOT / "CONTRIBUTING.md",
             ROOT / "SECURITY.md",
             ROOT / "DISCLAIMER.md",

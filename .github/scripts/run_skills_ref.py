@@ -41,7 +41,7 @@ class ValidationBootstrapError(Exception):
 def download_archive() -> bytes:
     request = urllib.request.Request(
         ARCHIVE_URL,
-        headers={"User-Agent": "adaptive-ui-engineer-ci/1.0.3"},
+        headers={"User-Agent": "adaptiveui-skill-ci/1.0.3"},
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
@@ -105,7 +105,7 @@ def run_validator(skill_path: Path) -> int:
     if not skill_path.exists():
         raise ValidationBootstrapError("Skill path does not exist: {0}".format(skill_path))
     payload = download_archive()
-    with tempfile.TemporaryDirectory(prefix="adaptive-ui-skills-ref-") as directory:
+    with tempfile.TemporaryDirectory(prefix="adaptiveui-skills-ref-") as directory:
         source_root = extract_validator(payload, Path(directory))
         sys.path.insert(0, str(source_root))
         try:

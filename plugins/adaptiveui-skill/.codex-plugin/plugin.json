@@ -1,0 +1,39 @@
+{
+  "name": "adaptiveui-skill",
+  "version": "2.0.0",
+  "description": "Explicit S and N workflows that derive resilient adaptive UI effects from product requests.",
+  "author": {
+    "name": "ksukie",
+    "url": "https://github.com/ksukie"
+  },
+  "homepage": "https://github.com/ksukie/AdaptiveUI-SKILL",
+  "repository": "https://github.com/ksukie/AdaptiveUI-SKILL",
+  "license": "Apache-2.0",
+  "keywords": [
+    "responsive-design",
+    "accessibility",
+    "cross-browser",
+    "frontend",
+    "ui-audit"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AdaptiveUI-SKILL",
+    "shortDescription": "Derive adaptive UI work from explicitly invoked product requests.",
+    "longDescription": "Use AdaptiveUI-S for standard responsive UI work, or AdaptiveUI-N for implementation with a required scoped post-change audit. Both derive adaptive UI effects even when a product request does not mention UI, exclude cosmetic-only and unrelated requirements, and verify browser-preview encoding when relevant.",
+    "developerName": "ksukie",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/ksukie/AdaptiveUI-SKILL",
+    "defaultPrompt": [
+      "Use $adaptiveui-s on this request and handle only its in-scope adaptive UI effects.",
+      "Use $adaptiveui-n on this feature; derive its adaptive UI effects and complete the required scoped audit."
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg"
+  }
+}

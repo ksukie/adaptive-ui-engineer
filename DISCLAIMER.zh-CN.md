@@ -4,7 +4,7 @@
 
 最后更新：2026-07-11
 
-Adaptive UI Engineer（以下简称“本项目”）是一个用于检查和改进 Web 界面代码的开源开发工具。本声明用于说明项目边界，不取代、修改或扩展 [Apache License 2.0](LICENSE) 的条款。
+AdaptiveUI-SKILL（以下简称“本项目”）是一个用于检查和改进 Web 界面代码的开源开发工具。本声明用于说明项目边界，不取代、修改或扩展 [Apache License 2.0](LICENSE) 的条款。
 
 ## 工具用途，不构成专业意见
 

@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file. The format 
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-07-20
+
+### Changed
+
+- Renamed the project and repository from `Adaptive UI Engineer` / `adaptive-ui-engineer` to `AdaptiveUI-SKILL` / `AdaptiveUI-SKILL`.
+- Renamed the Codex plugin identifier to `adaptiveui-skill`, the Skill identifiers to `adaptiveui-s` and `adaptiveui-n`, and the user-facing labels to `AdaptiveUI-S` and `AdaptiveUI-N`.
+- Renamed the explicit text invocations to `$adaptiveui-s` and `$adaptiveui-n`, the auditor configuration file to `.adaptiveui-skill.json`, and the audit tool identifier to `adaptiveui-skill`.
+- Made the Simplified Chinese `README.md` the repository homepage and moved the English documentation to `README.en.md` with reciprocal language links.
+- Renamed and refreshed the README workflow image for the new project identity.
+- Bumped the audit report schema to version 3 because the report tool identifier changed.
+
+### Migration
+
+- Existing Codex installations must remove `adaptive-ui-engineer@adaptive-ui-engineer`, add the renamed marketplace, and install `adaptiveui-skill@adaptiveui-skill`.
+- Manual installations must replace the old `adaptive-ui-s` and `adaptive-ui-n` directories with `adaptiveui-s` and `adaptiveui-n` rather than leaving both generations discoverable.
+
 ## [1.1.0] - 2026-07-16
 
 ### Added
@@ -96,12 +112,13 @@ All notable changes to this project will be documented in this file. The format 
 - Made report metadata root-relative by default, added opt-in evidence redaction and absolute paths, sanitized skipped-file errors, and made explicit output atomic with linked-destination and linked-parent refusal.
 - Pinned GitHub Actions to immutable commits, authenticated the fixed Agent Skills validator source archive by SHA-256, and locked every CI-only Python dependency by version and hash.
 
-[Unreleased]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.3...v1.1.0
-[1.0.3]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/ksukie/adaptive-ui-engineer/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.1...v1.0.0
-[0.2.1]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/ksukie/adaptive-ui-engineer/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/ksukie/adaptive-ui-engineer/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v1.1.0...v2.0.0
+[1.1.0]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v1.0.3...v1.1.0
+[1.0.3]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v0.2.1...v1.0.0
+[0.2.1]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/ksukie/AdaptiveUI-SKILL/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/ksukie/AdaptiveUI-SKILL/releases/tag/v0.1.0

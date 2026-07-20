@@ -1,62 +1,62 @@
 <p align="center">
-  <img src="plugins/adaptive-ui-engineer/assets/logo.svg" width="144" height="144" alt="Adaptive UI Engineer logo">
+  <img src="plugins/adaptiveui-skill/assets/logo.svg" width="144" height="144" alt="AdaptiveUI-SKILL 标志">
 </p>
 
-# Adaptive UI Engineer
+# AdaptiveUI-SKILL
 
-**Two portable, explicit-only Agent Skills for auditing, implementing, and verifying resilient responsive web interfaces.**
+**用于审计、实现和验证可靠响应式 Web 界面的两个仅显式调用的可移植 Agent Skill。**
 
-[简体中文](README.zh-CN.md) · [Agent Skills specification](https://agentskills.io/specification) · [Apache-2.0](LICENSE) · [Disclaimer](DISCLAIMER.md)
+[English](README.en.md) · [Agent Skills 规范](https://agentskills.io/specification) · [Apache-2.0](LICENSE) · [免责声明](DISCLAIMER.zh-CN.md)
 
-Adaptive UI Engineer turns responsive UI work into an evidence-based workflow. It covers layout reflow, overflow, viewport units, semantic radius systems, keyboard and touch interaction, accessibility settings, cross-browser fallbacks, and unnecessary JavaScript complexity. It does not generate a separate design for every screen resolution and does not hide defects behind global clipping.
+AdaptiveUI-SKILL 将 UI 适配从“多写几个断点”升级为有证据的工程流程。它覆盖布局重排、横向溢出、视口单位、语义圆角体系、键盘与触摸交互、无障碍偏好、跨浏览器回退和不必要的 JavaScript 复杂度。它不会为每一种物理分辨率单独生成页面，也不会用全局裁切掩盖问题。
 
 <p align="center">
-  <img src="docs/images/adaptive-ui-engineer-workflow.png" width="100%" alt="Adaptive UI Engineer audits interface issues, repairs root causes, and verifies responsive layouts across mobile, tablet, and desktop widths.">
+  <img src="docs/images/adaptiveui-skill-workflow.png" width="100%" alt="Adaptive UI SKILL 审计界面问题、修复根因，并验证移动端、平板和桌面端的响应式布局。">
 </p>
 
-<p align="center"><sub>Audit the evidence, repair the root cause, and verify resilient reflow.</sub></p>
+<p align="center"><sub>审计证据，修复根因，验证可靠重排。</sub></p>
 
-The repository contains two framework-agnostic companion Agent Skills and a thin Codex plugin wrapper. The Skills remain the single source of workflow truth: `Adaptive-UI-S` is the standard workflow, while `Adaptive-UI-N` adds a required, scoped post-change style audit.
+仓库包含两个框架无关、相互配合的 Agent Skill，以及一层轻量 Codex Plugin 封装。Skill 始终是工作流的唯一事实来源：`AdaptiveUI-S` 是标准工作流，`AdaptiveUI-N` 则增加一次必做、且有范围限制的改动后样式审查。
 
-## Why this exists
+## 为什么需要它
 
-Common “responsive baselines” often mix good primitives with damaging global patches:
+许多所谓“通用适配基座”会把正确的基础能力和有害的全局补丁混在一起：
 
-- `overflow-x: hidden` conceals the overflowing element and can clip focus or drawers.
-- assigning 44px dimensions and padding to every link breaks inline prose;
-- `pre, code { white-space: pre-wrap }` changes code semantics;
-- `iframe { height: auto }` does not establish a useful embedded aspect ratio;
-- more device breakpoints do not compensate for missing intrinsic layout;
-- a static scan cannot prove browser behavior or WCAG conformance.
+- `overflow-x: hidden` 会隐藏真正越界的元素，并可能裁掉焦点或抽屉；
+- 给所有链接统一加 44px 尺寸和内边距会破坏行内文本；
+- `pre, code { white-space: pre-wrap }` 会改变代码展示语义；
+- `iframe { height: auto }` 不能建立可靠的嵌入比例；
+- 增加设备断点不能弥补缺失的内在尺寸布局；
+- 静态扫描不能证明浏览器行为或 WCAG 合规。
 
-This Skill replaces those shortcuts with root-cause diagnosis, constrained implementation, and explicit verification evidence.
+本 Skill 用根因诊断、受限修改和明确验证证据替代这些捷径。
 
-## Capabilities
+## 核心能力
 
-- `Adaptive-UI-S`: standard audit-only, implementation, and verification work, plus a user-requested final audit after intermittent work.
-- `Adaptive-UI-N`: UI implementation followed by a mandatory audit of this task's changed files and directly related styles.
-- Explicit-only activation: an installed Skill, a matching request, or a previous invocation never enables either Skill for a later message.
-- Adaptive UI-relevance gating: after an explicit invocation, each Skill derives in-scope adaptive UI effects even when the request names only product behavior; cosmetic-only, copy-only, and unrelated non-UI details cannot shape or expand that scope.
-- Responsive layout review for containers, grid, flex, intrinsic sizing, overflow, zoom, media, tables, and viewport behavior.
-- Optional visual-hierarchy guidance when component radius consistency is in scope; existing design tokens win.
-- Keyboard, focus, navigation, target-size, motion, forced-color, and text-spacing checks.
-- JavaScript simplification: remove viewport-driven sizing, scroll interception, duplicate rendering, autoplay, stale listeners, and unnecessary state.
-- Adapters for Vanilla HTML/CSS/JS, React/Next, Vue/Nuxt, SvelteKit, Tailwind, scoped CSS, CSS Modules, preprocessors, and CSS-in-JS.
-- A zero-dependency Python auditor with stable rule IDs, confidence labels, suppressions, JSON output, and CI thresholds.
-- A standard-library, fail-open update scheduler with absolute next-check times and detailed post-task reminders; no automatic updates.
-- Optional browser evidence when the host already provides browser control; no mandatory Playwright installation.
-- Browser-preview encoding verification that separates source UTF-8 validity, the HTML declaration, HTTP `Content-Type`, and the browser's effective `document.characterSet`.
+- `AdaptiveUI-S`：标准的只读审计、实施修改和验证；也支持在断续工作结束后由用户显式要求的最终审查。
+- `AdaptiveUI-N`：完成 UI 实现后，强制审查本任务改动的文件及其直接相关样式。
+- 仅显式调用：已安装、任务内容匹配，或同一对话里曾经调用，都不会让任一 Skill 在后续消息自动启用。
+- 适配 UI 相关性门控：显式调用后，即使请求只描述产品功能，Skill 也会主动推导属于适配范围的 UI 影响；纯装饰、纯文案和无关的非 UI 信息不能改变或扩大该范围。
+- 检查容器、Grid、Flex、内在尺寸、溢出、缩放、媒体、表格和视口行为。
+- 当请求明确涉及组件圆角一致性时，提供可选的视觉层级建议；优先保留已有设计令牌。
+- 检查键盘、焦点、导航、目标尺寸、动画偏好、强制颜色和文字间距。
+- 简化 JavaScript：移除视口驱动尺寸、滚动劫持、重复渲染、自动播放、过期监听和冗余状态。
+- 适配 Vanilla、React/Next、Vue/Nuxt、SvelteKit、Tailwind、Scoped CSS、CSS Modules、预处理器和 CSS-in-JS。
+- 提供零第三方依赖的 Python 审计器，包含稳定规则编号、置信度、豁免、JSON 输出和 CI 阈值。
+- 提供仅使用标准库、失败时静默降级的更新调度器，保存绝对下次检查时间并在任务后给出详细提醒；不会自动更新。
+- 宿主已有浏览器能力时进行运行时验证，但不强制安装 Playwright。
+- 网页预览编码验证会分别检查源码 UTF-8、HTML 声明、HTTP `Content-Type` 和浏览器实际采用的 `document.characterSet`。
 
-## Package layout
+## 目录结构
 
 ```text
 .agents/plugins/marketplace.json
-plugins/adaptive-ui-engineer/
+plugins/adaptiveui-skill/
 ├── .codex-plugin/plugin.json
 ├── assets/
 ├── hooks/hooks.json
 └── skills/
-    ├── adaptive-ui-s/
+    ├── adaptiveui-s/
     │   ├── SKILL.md
     │   ├── agents/openai.yaml
     │   ├── release.json
@@ -65,142 +65,143 @@ plugins/adaptive-ui-engineer/
     │   │   └── check_update.py
     │   ├── references/
     │   └── assets/
-    └── adaptive-ui-n/
+    └── adaptiveui-n/
         ├── SKILL.md
         └── agents/openai.yaml
 tests/
 ```
 
-Human-facing project documentation stays at the repository root. `Adaptive-UI-N` deliberately reuses the auditor, update scheduler, release metadata, and references from its sibling `adaptive-ui-s` directory, so the two directories are one installable bundle.
+面向人的项目说明放在仓库根目录；`AdaptiveUI-N` 有意复用同级 `adaptiveui-s` 中的审计器、更新调度器、发布元数据和引用资料，因此两个目录构成一个安装包。
 
-## Installation
+## 安装
 
-### Any Agent Skills-compatible client
+### 通用 Agent Skills 客户端
 
-Install or copy both directories using the client's supported Skill mechanism, preserving them as siblings:
+按照客户端支持的 Skill 安装方式复制或安装以下两个目录，并保持它们为同级目录：
 
 ```text
-plugins/adaptive-ui-engineer/skills/adaptive-ui-s
-plugins/adaptive-ui-engineer/skills/adaptive-ui-n
+plugins/adaptiveui-skill/skills/adaptiveui-s
+plugins/adaptiveui-skill/skills/adaptiveui-n
 ```
 
-For clients that scan `$HOME/.agents/skills`, copy both directories there. Do not install `adaptive-ui-n` by itself.
+对于扫描 `$HOME/.agents/skills` 的客户端，可将两个目录复制到该位置。不要只安装 `adaptiveui-n`。
 
-PowerShell:
+PowerShell：
 
 ```powershell
 Copy-Item -Recurse -Force `
-  .\plugins\adaptive-ui-engineer\skills\adaptive-ui-s `
-  "$HOME\.agents\skills\adaptive-ui-s"
+  .\plugins\adaptiveui-skill\skills\adaptiveui-s `
+  "$HOME\.agents\skills\adaptiveui-s"
 Copy-Item -Recurse -Force `
-  .\plugins\adaptive-ui-engineer\skills\adaptive-ui-n `
-  "$HOME\.agents\skills\adaptive-ui-n"
+  .\plugins\adaptiveui-skill\skills\adaptiveui-n `
+  "$HOME\.agents\skills\adaptiveui-n"
 ```
 
-macOS/Linux:
+macOS/Linux：
 
 ```sh
-cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-s \
-  "$HOME/.agents/skills/adaptive-ui-s"
-cp -R plugins/adaptive-ui-engineer/skills/adaptive-ui-n \
-  "$HOME/.agents/skills/adaptive-ui-n"
+cp -R plugins/adaptiveui-skill/skills/adaptiveui-s \
+  "$HOME/.agents/skills/adaptiveui-s"
+cp -R plugins/adaptiveui-skill/skills/adaptiveui-n \
+  "$HOME/.agents/skills/adaptiveui-n"
 ```
 
-Client discovery and invocation details vary. A client may discover a Skill from `SKILL.md`; in a manual installation, keep the `adaptive-ui-s` and `adaptive-ui-n` directories together so N can find the bundled auditor, references, and assets in S. When that sibling auditor is absent, N must not claim enhanced completion. `agents/openai.yaml` is an optional Codex presentation extension.
+不同客户端的发现和调用方式可能不同。客户端可以仅通过 `SKILL.md` 发现 Skill；手动安装时，必须让 `adaptiveui-s` 与 `adaptiveui-n` 保持在同级，N 才能找到 S 内随附的审计器、引用资料和资源；缺少这个同级审计器时，N 不得声称已完成增强流程；`agents/openai.yaml` 是可选的 Codex 展示扩展。
 
-### Codex plugin after the repository is published
+### 仓库发布后的 Codex Plugin 安装
 
 ```text
-codex plugin marketplace add ksukie/adaptive-ui-engineer
-codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
+codex plugin marketplace add ksukie/AdaptiveUI-SKILL
+codex plugin add adaptiveui-skill@adaptiveui-skill
 ```
 
-For local plugin development, add the absolute repository directory as a non-default marketplace, then install the same plugin name. Start a new task after installation so the updated Skill is discovered.
+本地开发时，先把仓库绝对路径添加为非默认 marketplace，再安装相同插件名。安装或更新后新建任务，使 Codex 重新发现 Skill。
 
-The plugin adds no MCP server, connector, or service credential. It bundles a `UserPromptSubmit` hook only to run the rate-limited update scheduler for an explicit S or N invocation. Codex requires users to review and trust plugin hooks before they run; marketplace installation may also follow the host's normal authentication policy.
+本插件不增加 MCP、连接器或服务凭据。它只随附一个 `UserPromptSubmit` Hook，用于在当前消息显式调用 S 或 N 时运行限频更新调度器。Codex 会要求用户先审查并信任插件 Hook；Marketplace 安装仍可能遵循宿主的常规身份验证策略。
 
-## Update
+## 更新
 
-Choose the matching update path. A ZIP download or manually copied Skill does not update itself.
+按旧版的获取方式选择对应的更新路径。下载的 ZIP 或手动复制的 Skill 不会自行更新。
 
-| Previous installation | Update |
+| 旧版来源 | 更新方式 |
 | --- | --- |
-| Git clone | From the repository directory, run `git pull --ff-only origin main`. Preserve or commit local changes first if Git reports that the worktree is not clean. |
-| ZIP download or manual copy | Download or copy the current version, then replace both sibling directories: `plugins/adaptive-ui-engineer/skills/adaptive-ui-s` and `plugins/adaptive-ui-engineer/skills/adaptive-ui-n`. Do not replace only `SKILL.md`. |
-| Codex plugin marketplace | Refresh the marketplace, remove the cached plugin, reinstall it, then start a new Codex task. |
+| Git 克隆的仓库 | 在仓库目录执行 `git pull --ff-only origin main`。若 Git 提示工作区不干净，先保留或提交本地改动。 |
+| 下载 ZIP 或手动复制 | 下载或复制当前版本，再替换两个同级目录：`plugins/adaptiveui-skill/skills/adaptiveui-s` 和 `plugins/adaptiveui-skill/skills/adaptiveui-n`；不要只替换 `SKILL.md`。 |
+| Codex Plugin marketplace | 刷新 marketplace、移除缓存中的旧插件、重新安装，然后新建 Codex 任务。 |
 
-For a Codex plugin installed from this marketplace:
+通过此 marketplace 安装的 Codex Plugin 可执行：
 
 ```text
-codex plugin marketplace upgrade adaptive-ui-engineer
-codex plugin remove adaptive-ui-engineer@adaptive-ui-engineer
-codex plugin add adaptive-ui-engineer@adaptive-ui-engineer
+codex plugin marketplace upgrade adaptiveui-skill
+codex plugin remove adaptiveui-skill@adaptiveui-skill
+codex plugin add adaptiveui-skill@adaptiveui-skill
 ```
 
-If the marketplace has not been configured yet, run `codex plugin marketplace add ksukie/adaptive-ui-engineer` before installing the plugin.
+若尚未添加该 marketplace，先执行 `codex plugin marketplace add ksukie/AdaptiveUI-SKILL`，再安装插件。
 
-### Optional update notices
+### 可选更新提醒
 
-Each explicit S or N invocation can run a non-blocking update scheduler. The first repository check is eligible 72 hours after the installed release time. After a successful check with no newer version, the next check is scheduled 72 hours later. When a newer stable release is found, the task completes first and then reports the installed and latest versions, release dates, subsequent stable-release count, latest bilingual summary, prior/current/next check times, and update guide. The first follow-up is scheduled after 36 hours; each later successful confirmation while the local version remains behind shortens the prior interval by 20% to a 12-hour floor.
+每次显式调用 S 或 N 时，都可以运行一个不阻塞主要任务的更新调度器。第一次仓库检查最早发生在本地版本正式发布时间的 72 小时后。若成功检查且没有新版本，下次检查安排在 72 小时后；若发现较新的稳定版本，则先完成当前任务，再报告本地与最新版本、发布时间、后续稳定版本数量、最新版双语摘要、前次/本次/下次检查时间和更新说明。第一次后续提醒安排在 36 小时后；只要本地仍落后，后续每次成功确认都会将上一次间隔缩短 20%，最低为 12 小时。
 
-`next_check_at` is an earliest eligible time, not a background timer. If the Skill is not used at that time, the check occurs on the first later explicit invocation and the next schedule is based on that actual check time. A failed request does not count as “no update,” does not shorten the reminder interval, and retries silently after 12 hours.
+`next_check_at` 表示“最早允许检查的时间”，不是后台定时器。若届时没有再次使用 Skill，检查会在下一次更晚的显式调用中执行，后续预约以那次实际检查时间为基准。请求失败不等同于“没有新版本”，不会缩短提醒间隔，并会在 12 小时后静默重试。
 
-The Codex plugin stores scheduler state in its writable plugin-data directory. A manually copied Skill uses the user's platform state directory when it is writable. The checker sends only a bounded HTTPS GET to the fixed raw release-metadata URL; it does not send prompts, source code, project paths, credentials, or a stable user identifier. It never updates files automatically and never blocks the requested UI task. Set `ADAPTIVE_UI_UPDATE_CHECK=0` or explicitly ask to skip the check to disable it.
+Codex Plugin 将调度状态保存在插件专用可写数据目录；手动复制的 Skill 会在可写时使用当前平台的用户状态目录。检查器只向固定的 Raw 发布元数据地址发送有大小限制的 HTTPS GET，不发送提示词、源码、项目路径、凭据或稳定用户标识。它不会自动更新任何文件，也不会阻塞用户要求的 UI 任务。设置 `ADAPTIVE_UI_UPDATE_CHECK=0` 或明确要求跳过检查即可关闭。
 
-### v1.0.0 migration
+### v2.0.0 迁移
 
-v1.0.0 replaces the former single `$adaptive-ui-engineer` invocation with two explicit choices. For a manual upgrade from v0.2.1, replace the old `adaptive-ui-engineer` directory rather than leaving it alongside the two new directories; otherwise an outdated third Skill can remain discoverable.
+v2.0.0 将项目、插件、两个 Skill 及其调用标识统一迁移到 `AdaptiveUI-SKILL` 命名。这是一次破坏性更名；旧安装不会自动变成新插件，手动复制的旧 Skill 目录也不应与新目录并存。
 
-| Former invocation | v1.0.0 replacement |
-| --- | --- |
-| `$adaptive-ui-engineer` for normal audit, refactor, or a final manual review | `$adaptive-ui-s` |
-| `$adaptive-ui-engineer` for UI implementation that must always finish with a scoped style audit | `$adaptive-ui-n` |
-
-## Explicit invocation and modes
-
-In Codex, select one of the bundled Skill labels: `@Adaptive-UI-S` or `@Adaptive-UI-N`. In text-based clients, invoke `$adaptive-ui-s` or `$adaptive-ui-n` in the current message. Some hosts may also show the `Adaptive UI Engineer` plugin parent; it is a container, not a third workflow, so select S or N when the workflow distinction matters.
-
-| Skill | Use it for | Completion behavior |
+| 项目 | v1.1.0 及以前 | v2.0.0 |
 | --- | --- | --- |
-| `Adaptive-UI-S` | Standard responsive UI audits, ordinary implementation, refactoring, and a final audit explicitly requested after intermittent work. The request may name only product behavior. | Derives only in-scope adaptive UI effects and never adds a final audit automatically. |
-| `Adaptive-UI-N` | Product implementation, repair, or refactoring whose derived adaptive UI changes must include a final review. | Implements only in-scope adaptive UI effects, then audits every task-owned UI-affecting change and its directly related styles. |
+| 仓库 | `ksukie/adaptive-ui-engineer` | `ksukie/AdaptiveUI-SKILL` |
+| Codex Plugin | `adaptive-ui-engineer@adaptive-ui-engineer` | `adaptiveui-skill@adaptiveui-skill` |
+| 标准 Skill | `Adaptive-UI-S` / `$adaptive-ui-s` | `AdaptiveUI-S` / `$adaptiveui-s` |
+| 增强 Skill | `Adaptive-UI-N` / `$adaptive-ui-n` | `AdaptiveUI-N` / `$adaptiveui-n` |
+| 配置文件 | `.adaptive-ui-engineer.json` | `.adaptiveui-skill.json` |
 
-Both Skills declare explicit-only invocation. In Codex, `allow_implicit_invocation: false` prevents prompt-based implicit invocation; their instructions also reject carrying a past invocation into a later message. A valid current-message invocation starts the relevance gate even when the remaining prompt does not mention UI. Roles, states, content length, target users, and supported platforms can constrain adaptive UI when they have a concrete user-visible effect. Standalone copywriting, typo-only work, cosmetic-only changes without an adaptive consequence, and unrelated database, server, deployment, or infrastructure choices stay outside scope. This partition neither cancels nor authorizes broader work: a clear broader request in the same message can be handled under other applicable instructions, while a background fact or Skill invocation alone cannot authorize it. After each installation or update, verify the per-message contract in a fresh chat: invoke S or N once, then send a matching UI request without `@` or `$` and confirm no implicit Skill is used. If both Skills are explicitly named, S owns an explicitly read-only request; otherwise N owns the implementation request.
+Codex 用户应移除旧插件、添加新的 marketplace 地址并安装新插件。手动安装用户应删除旧的 `adaptive-ui-s`、`adaptive-ui-n` 目录，再复制新的 `adaptiveui-s`、`adaptiveui-n` 目录。旧版迁移历史仍保留在 [CHANGELOG.md](CHANGELOG.md)。
 
-For the canonical S/N comparison and example prompts, consult the bundled
-[mode-selection guide](plugins/adaptive-ui-engineer/skills/adaptive-ui-s/references/mode-selection.md).
-A question about the modes alone does not activate either workflow or authorize project work.
+## 显式调用与模式
 
-Examples:
+在 Codex 中选择其中一个随附 Skill 标签：`@AdaptiveUI-S` 或 `@AdaptiveUI-N`；在文本客户端中，于当前消息写入 `$adaptiveui-s` 或 `$adaptiveui-n`。某些宿主也可能显示 `AdaptiveUI-SKILL` 插件父级；它只是容器而非第三种工作流，需要区分工作流时请选择 S 或 N。
+
+| Skill | 适用场景 | 完成行为 |
+| --- | --- | --- |
+| `AdaptiveUI-S` | 标准响应式 UI 审计、普通实现、重构，以及断续工作结束后由用户显式要求的最终审查；请求可以只描述产品功能。 | 只推导属于适配范围的 UI 影响，不会自动增加最终审查。 |
+| `AdaptiveUI-N` | 产品实现、修复或重构，其中推导出的适配 UI 改动必须包含最终审查。 | 只实现属于适配范围的 UI 影响，并审查本任务中所有影响 UI 的改动及直接相关样式。 |
+
+两个 Skill 都声明为仅显式调用。在 Codex 中，`allow_implicit_invocation: false` 会阻止按提示内容隐式调用；Skill 指令也禁止将此前调用延续到后续消息。当前消息只要有效显式调用，就会启动相关性门控，不要求其余提示词出现“UI”。角色、状态、内容长度、目标用户和支持平台只有在形成具体用户可见影响时才约束适配 UI；纯文案、纯错字、没有适配后果的纯装饰改动，以及无关的数据库、服务端、部署和基础设施选择均在范围外。该划分既不取消、也不自动授权更广的工作：同一消息明确提出的更广工作可按其他适用指令处理，背景信息或 Skill 调用本身不构成授权。每次安装或更新后，都应在新对话中验证逐消息契约：先调用一次 S 或 N，再发送一条不含 `@` 或 `$` 的匹配 UI 请求，确认没有隐式使用 Skill。同时显式指名两者时，只读请求由 S 负责，实施请求由 N 负责。
+
+需要查看标准对比和调用示例时，可查阅随插件提供的[模式选择说明](plugins/adaptiveui-skill/skills/adaptiveui-s/references/mode-selection.md)。仅询问模式区别不会激活任一工作流，也不会授权项目操作。
+
+示例：
 
 ```text
-Use $adaptive-ui-s to audit this page for responsive and accessibility issues. Do not edit files.
+使用 $adaptiveui-s 审计这个页面的响应式和无障碍问题，只读，不修改文件。
 ```
 
 ```text
-Use $adaptive-ui-s to review the completed checkout task's changed files and directly related styles. Do not edit files.
+使用 $adaptiveui-s 审查已完成的结账任务所改文件及直接相关样式，只读，不修改文件。
 ```
 
 ```text
-Use $adaptive-ui-n to normalize the card radius hierarchy and remove viewport-driven layout JavaScript, then complete the required post-change style audit.
+使用 $adaptiveui-n 统一卡片圆角层级，并移除由视口宽度驱动的布局 JavaScript，之后完成必做的改动后样式审查。
 ```
 
 ```text
-Use $adaptive-ui-n to add workspace invitations with owner, editor, and viewer roles.
+使用 $adaptiveui-n 为工作区增加成员邀请功能，并支持所有者、编辑者和查看者角色。
 ```
 
-The last prompt never mentions UI. N still derives and implements the relevant invitation entry, form, role controls, feedback states, and responsive behavior. Storage and delivery details remain outside the Adaptive-UI scope unless they create a concrete user-visible constraint.
+最后一条提示词没有提到 UI，N 仍会主动推导并实现邀请入口、表单、角色控件、反馈状态和响应式行为。存储与发送方式仍在 AdaptiveUI 范围之外，除非它们形成具体的用户可见约束。
 
-An N-only request that explicitly forbids edits stops without project inspection and asks for a current-message S invocation. N never silently activates S.
+如果只调用 N 却明确要求只读，N 会在检查项目之前停止，并要求用户在当前消息显式调用 S；N 不会静默启用 S。
 
-## Static auditor
+## 静态审计器
 
-The auditor is read-only unless `--output` is explicitly supplied.
-
-On Windows, use `py -3` in place of `python` when the `python` command is not registered.
+除非显式提供 `--output`，审计器始终只读。若 Windows 中未注册 `python` 命令，请以 `py -3` 替代。
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py <target>
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py <target>
   [--format text|json]
   [--config <file>]
   [--fail-on P0|P1|P2|P3|none]
@@ -209,31 +210,31 @@ python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py <ta
   [--output <file>]
 ```
 
-Examples:
+示例：
 
 ```text
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format text --fail-on none
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format json --fail-on P1
-python plugins/adaptive-ui-engineer/skills/adaptive-ui-s/scripts/audit_ui.py ./src --format json --redact-evidence --output audit.json
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py ./src --format text --fail-on none
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py ./src --format json --fail-on P1
+python plugins/adaptiveui-skill/skills/adaptiveui-s/scripts/audit_ui.py ./src --format json --redact-evidence --output audit.json
 ```
 
-Exit codes:
+退出码：
 
-| Code | Meaning |
+| 代码 | 含义 |
 | ---: | --- |
-| 0 | Scan completed and the selected threshold was not breached |
-| 1 | Scan completed and a finding met the selected threshold |
-| 2 | Invalid input, configuration, or output operation |
+| 0 | 扫描完成，未触发所选失败阈值 |
+| 1 | 扫描完成，存在达到阈值的发现 |
+| 2 | 输入、配置或输出操作无效 |
 
-JSON output uses `schema_version: 2`. Each finding includes `rule_id`, `priority`, `confidence`, `evidence_level`, `validation_state`, `category`, `path`, `line`, `message`, `evidence`, and `recommendation`. `confidence` describes rule certainty, `evidence_level` identifies the evidence origin, and `validation_state` records whether additional validation applies and its outcome. The normative contract is [audit-report.schema.json](plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-report.schema.json). Report metadata uses paths relative to the audit root by default; `--absolute-paths` is an explicit opt-in. Evidence can contain short source excerpts, so use `--redact-evidence` before sharing a report when source disclosure is not authorized.
+JSON 固定使用 `schema_version: 3`。每条发现包含 `rule_id`、`priority`、`confidence`、`evidence_level`、`validation_state`、`category`、`path`、`line`、`message`、`evidence` 和 `recommendation`。`confidence` 表示规则判断的确定程度，`evidence_level` 表示证据来源，`validation_state` 表示额外验证是否适用及其结果。规范定义见 [audit-report.schema.json](plugins/adaptiveui-skill/skills/adaptiveui-s/assets/audit-report.schema.json)。报告元数据默认使用相对于审计根目录的路径；只有显式传入 `--absolute-paths` 才会输出绝对路径。证据可能包含短源码片段，未经授权不得共享源码时，请在分享报告前使用 `--redact-evidence`。
 
-AUI023 reports source that is not valid UTF-8. AUI024 separately reviews serialized HTML encoding declarations: a missing declaration requires HTTP-header confirmation, while non-UTF-8, duplicate, or declarations ending after the first 1024 bytes are reported directly. Runtime preview verification still checks the main-document `Content-Type` and `document.characterSet`; static source evidence cannot prove browser decoding.
+AUI023 检查源码是否为有效 UTF-8。AUI024 另行检查序列化 HTML 的编码声明：缺少声明时要求确认 HTTP 响应头，非 UTF-8、重复或结束位置超过前 1024 字节的声明会直接报告。运行时预览仍需检查主文档 `Content-Type` 与 `document.characterSet`，静态源码不能证明浏览器最终采用的编码。
 
-Document-level semantic checks apply to `.html` and `.htm`. Framework component files receive source triage for CSS, scripts, and known utility patterns; rendered semantic behavior still needs runtime verification.
+文档级语义检查仅适用于 `.html` 和 `.htm`。框架组件文件只接受 CSS、脚本和已知 utility 模式的源码分诊；渲染后的语义行为仍需运行时验证。
 
-### Configuration
+### 配置文件
 
-Place `.adaptive-ui-engineer.json` at the audited root or pass `--config`:
+在审计根目录放置 `.adaptiveui-skill.json`，或使用 `--config`：
 
 ```json
 {
@@ -242,69 +243,69 @@ Place `.adaptive-ui-engineer.json` at the audited root or pass `--config`:
     {
       "rule": "AUI004",
       "paths": ["src/styles/full-bleed.css"],
-      "reason": "The gallery background intentionally spans the visual viewport."
+      "reason": "画廊背景按设计需要覆盖整个视觉视口。"
     }
   ],
   "fail_on": "P1"
 }
 ```
 
-The bundled schema is at `plugins/adaptive-ui-engineer/skills/adaptive-ui-s/assets/audit-config.schema.json`. Suppressions require a narrow path and a reason; they are counted in output.
+Schema 位于 `plugins/adaptiveui-skill/skills/adaptiveui-s/assets/audit-config.schema.json`。每个豁免都必须指定窄路径和原因，并会计入输出中的 `summary.suppressed`。
 
-## Design principles
+## 设计原则
 
-- Target CSS constraints and content pressure, not physical device resolutions.
-- Keep semantic DOM, reading order, visual order, and focus order aligned.
-- Prefer intrinsic CSS and native behavior over JavaScript layout calculations.
-- Repair the source of horizontal overflow rather than clipping the page.
-- Use breakpoints only for genuine structural changes.
-- Treat modern CSS as progressive enhancement when core content depends on it.
-- Separate the WCAG 2.2 AA 24 CSS pixel target requirement and exceptions from the ergonomic 44px touch recommendation.
-- Report tested evidence, static evidence, inference, and untested environments separately.
+- 面向 CSS 约束和内容压力设计，不面向物理分辨率。
+- 保持 DOM、阅读、视觉和焦点顺序一致。
+- 优先使用内在尺寸 CSS 和浏览器原生行为。
+- 修复横向溢出的来源，不裁切整个页面。
+- 只有结构真正变化时才增加断点。
+- 核心内容依赖新 CSS 能力时必须提供渐进回退。
+- 区分 WCAG 2.2 AA 的 24 CSS 像素最低要求及其例外，与约 44px 的触摸舒适建议。
+- 分开报告运行时验证、静态证据、推断和未测试环境。
 
-## Compatibility policy
+## 兼容策略
 
-### Designed baseline
+### 设计目标
 
-| Environment | Policy |
+| 环境 | 策略 |
 | --- | --- |
-| Chrome, Edge, Firefox | Current and previous two stable releases |
-| Safari and iOS Safari | 16.4 and later |
-| Chrome Android and Android WebView | Modern maintained releases |
-| IE11 and Safari below 16.4 | Unsupported; core semantic degradation is still preferred |
-| Python auditor and optional update scheduler | Python 3.9+ on Windows, macOS, and Linux |
+| Chrome、Edge、Firefox | 当前及前两个稳定版本 |
+| Safari 与 iOS Safari | 16.4 及以上 |
+| Chrome Android 与 Android WebView | 仍在维护的现代版本 |
+| IE11 与 Safari 16.4 以下 | 不支持，但仍优先保证核心语义降级 |
+| Python 审计器与可选更新调度器 | Windows、macOS、Linux 上的 Python 3.9+ |
 
-### Evidence status for 1.1.0
+### 2.0.0 证据状态
 
-- Locally validated on Windows with Python 3.9, 3.10, and 3.11.
-- Unit tests and package checks cover the explicit-invocation relevance gate, deterministic S/N routing, AUI024 HTML declaration checks, browser-preview encoding guidance, cross-platform path behavior, and update scheduling. The repository CI workflow is configured for Windows, macOS, Linux, and Python 3.9–3.13.
-- The package does not claim that a generated or audited website passes untested browsers, assistive technologies, or WCAG conformance.
+- 已在 Windows 与 Python 3.9、3.10、3.11 上完成本地验证。
+- 单元测试和包校验覆盖显式调用相关性门控、S/N 确定性分流、AUI024 HTML 编码声明检查、浏览器预览编码指引、跨平台路径行为和更新调度；仓库 CI workflow 已配置 Windows、macOS、Linux 和 Python 3.9–3.13。
+- 本项目不会因为一次静态扫描，就宣称生成或审计的网站通过了未测试浏览器、辅助技术或 WCAG 合规。
 
-## Development and validation
+## 开发与验证
 
 ```text
 python -m unittest discover -s tests -v
 ```
 
-Open Agent Skills validation uses a fixed source commit, verifies the downloaded archive by SHA-256, and hash-locks every CI-only Python dependency. GitHub Actions are pinned to immutable commits. Codex authors should additionally run the current Skill Creator and Plugin Creator validators before release.
+CI 使用固定提交的 Agent Skills 校验器源码，对下载归档执行 SHA-256 校验，并对全部 CI 专用 Python 依赖执行哈希锁定；GitHub Actions 也固定到不可变提交。Codex 作者发布前还应运行当前版本的 Skill Creator 和 Plugin Creator 校验器。
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [DISCLAIMER.md](DISCLAIMER.md), [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md), and [CHANGELOG.md](CHANGELOG.md).
+更多信息见 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md)、[DISCLAIMER.zh-CN.md](DISCLAIMER.zh-CN.md)、[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) 和 [CHANGELOG.md](CHANGELOG.md)。
 
-## Security and open-source posture
+## 安全与开源状态
 
-- The runtime auditor uses only the Python standard library. It does not execute scanned code, access the network, or install packages.
-- The separate standard-library update scheduler accesses only the fixed release-metadata endpoint when a stored check is due, bounds and validates the response, treats summaries as display-only data, writes only scheduler state, and fails open without changing user projects.
-- Symbolic links and Windows reparse points inside the audit tree are skipped; a linked target or configuration is rejected. Local resource checks cannot escape the audit root.
-- Reports are read-only by default. Explicit file output is written atomically and refuses a linked destination or linked parent path.
-- Runtime users have no third-party Python dependencies. CI-only actions use immutable commit pins; the Agent Skills validator source archive and dependency graph are cryptographically locked.
-- The repository includes an Apache-2.0 license, contribution terms, a private vulnerability-reporting path, automated security analysis, and a first-release checklist.
+- 运行时审计器只使用 Python 标准库，不执行被扫描代码、不联网、也不安装软件包。
+- 独立的标准库更新调度器只会在预约检查到期时访问固定发布元数据地址；它限制并验证响应、把摘要视为仅展示数据、只写调度状态，并在失败时静默降级且不修改用户项目。
+- 审计树内的符号链接和 Windows 重解析点会被跳过；链接形式的目标或配置会被拒绝；本地资源检查不能越过审计根目录。
+- 默认只读。只有显式指定输出文件才会写入，而且采用原子写入并拒绝链接目标或包含链接的父路径。
+- 运行时没有第三方 Python 依赖。CI 专用 Action 固定到不可变提交，Agent Skills 校验器源码归档及其完整依赖图均执行密码学锁定。
+- 仓库提供 Apache-2.0 许可证、贡献条款、私密漏洞报告路径、自动安全分析和首次发布检查清单。
 
-These controls are defense in depth, not a claim of formal penetration testing, legal review, WCAG certification, or security certification. Read the complete [security policy](SECURITY.md) before processing confidential source code.
+这些措施属于纵深防御，不代表项目已经完成正式渗透测试、法律审查、WCAG 认证或安全认证。处理机密源码前，请完整阅读[安全策略](SECURITY.md)。
 
-## License
+## 许可证
 
-Apache License 2.0. See [LICENSE](LICENSE).
+Apache License 2.0，详见 [LICENSE](LICENSE)。
 
-## Disclaimer
+## 免责声明
 
-Read the complete [English disclaimer](DISCLAIMER.md) or [Simplified Chinese translation](DISCLAIMER.zh-CN.md). Adaptive UI Engineer is an independent community project. It is not affiliated with or endorsed by OpenAI, W3C, browser vendors, or the framework vendors named in this documentation. Product names and trademarks belong to their respective owners.
+请阅读完整的[简体中文免责声明](DISCLAIMER.zh-CN.md)或[英文版](DISCLAIMER.md)。AdaptiveUI-SKILL 是独立社区项目，与 OpenAI、W3C、浏览器厂商及文档中提到的框架厂商不存在隶属或背书关系。相关产品名称和商标归各自权利人所有。
